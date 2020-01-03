@@ -5,13 +5,11 @@
 - [Proxies](#proxies)
 - [See also](#see-also)
 
-## Prerequisites
-### Shaarli
+## Requirements
 
-- A web server and PHP interpreter module/service have been installed.
-- You have write access to the Shaarli installation directory.
-- The correct read/write permissions have been granted to the web server user and group.
-- Your PHP interpreter is compatible with supported PHP versions:
+- A web server.
+- Write access to the Shaarli installation directory.
+- A PHP interpreter such as [Apache mod_php](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mariadb-php-lamp-stack-on-debian-10#step-3-%E2%80%94-installing-php) compatible with supported PHP versions:
 
 Version | Status | Shaarli compatibility
 :---:|:---:|:---:
@@ -23,7 +21,7 @@ Version | Status | Shaarli compatibility
 5.4 | EOL: 2015-09-14 | Yes (up to Shaarli 0.8.x)
 5.3 | EOL: 2014-08-14 | Yes (up to Shaarli 0.8.x)
 
-- The following PHP extensions are installed on the server:
+- The following PHP extensions:
 
 Extension | Required? | Usage
 ---|:---:|---
@@ -36,58 +34,66 @@ Extension | Required? | Usage
 [`php-gettext`](http://php.net/manual/en/book.gettext.php) | optional | Use the translation system in gettext mode (faster)
 --------------------------------------------------------------------------------
 
-### SSL/TLS configuration 
+## Configuration
 
-To setup HTTPS / SSL on your webserver (recommended), you must generate a public/private **key pair** and a **certificate**, and install, configure and activate the appropriate **webserver SSL extension**.
+Here are links to useful guides on setting up a web server. You can find example webserver configurations for Shaarli further down this page.
 
-#### Let's Encrypt
+- [How to install the Apache web server](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-debian-10)
+- [How to install the Nginx web server](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-debian-10)
 
-[Let's Encrypt](https://en.wikipedia.org/wiki/Let%27s_Encrypt) is a certificate authority that provides free TLS/X.509 certificates via an automated process.
+### SSL/TLS (HTTPS)
 
- * Install `certbot` using the appropriate method described on https://certbot.eff.org/.
- 
-Location of the `certbot` program and template configuration files may vary depending on which installation method was used. Change the file paths below accordingly. Here is an easy way to create a signed certificate using `certbot`, it assumes `certbot` was installed through APT on a Debian-based distribution:
+We recommend setting up [HTTPS](https://en.wikipedia.org/wiki/HTTPS) on your webserver for secure communication between clients and the server.
 
- * Stop the apache2/nginx service.
- * Run `certbot --agree-tos --standalone --preferred-challenges tls-sni --email "youremail@example.com" --domain yourdomain.example.com`
- * For the Apache webserver, copy `/usr/lib/python2.7/dist-packages/certbot_apache/options-ssl-apache.conf` to `/etc/letsencrypt/options-ssl-apache.conf` (paths may vary depending on installation method)
- * For Nginx: TODO
- * Setup your webserver as described below
- * Restart the apache2/nginx service.
+For public-facing web servers this can be done using free SSL/TLS certificates from [Let's Encrypt](https://en.wikipedia.org/wiki/Let's_Encrypt), a non-profit certificate authority provididing free certificates.
 
-#### Self-signed certificates
+ - [How to secure Apache with Let's Encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-debian-10)
+ - [How to secure Nginx with Let's Encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-debian-10)
+ - [How To Use Certbot Standalone Mode to Retrieve Let's Encrypt SSL Certificates](https://www.digitalocean.com/community/tutorials/how-to-use-certbot-standalone-mode-to-retrieve-let-s-encrypt-ssl-certificates-on-debian-10)
 
-If you don't want to request a certificate from Let's Encrypt, or are unable to (for example, webserver on a LAN, or domain name not registered in the public DNS system), you can generate a self-signed certificate. This certificate will trigger security warnings in web browsers, unless you add it to the browser's SSL store manually.
+If you don't want to rely on a certificate authority, or the server can only be accessed from your own network, you can also generate self-signed certificates. Not that this will generate security warnings in web browsers/clients trying to access Shaarli:
 
-* Apache: run `make-ssl-cert generate-default-snakeoil --force-overwrite`
-* Nginx: TODO
+- [How To Create a Self-Signed SSL Certificate for Apache](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-on-debian-10)
+- [How To Create a Self-Signed SSL Certificate for Nginx](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-on-debian-10)
 
 --------------------------------------------------------------------------------
 
-## Apache
+### Examples
 
-Here is a basic configuration example for the Apache web server with `mod_php`.
+The following examples assume a Debian-based operating system is installed. On other distributions you may have to adapt details such as package installation procedures, configuration file locations, and webserver username/group.
 
-In `/etc/apache2/sites-available/shaarli.conf`:
+#### Apache
+
+```bash
+# Install apache and modules
+sudo apt install TODO
+
+# Create a document root for the apache virtualhost
+sudo mkdir -p /var/www/shaarli.mydomain.org/
+
+# Edit the virtualhost configuration file with your favorite editor
+sudo nano /etc/apache2/sites-available/shaarli.conf
+```
 
 ```apache
+# A Basic configuration example for the Apache web server with mod_php
 <VirtualHost *:443>
-    ServerName   shaarli.my-domain.org
-    DocumentRoot /absolute/path/to/shaarli/
+    ServerName   shaarli.mydomain.org
+    DocumentRoot /var/www/shaarli.mydomain.org/
 
-    # Logging
-    # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+    # Log level. Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
     LogLevel  warn
+    # Log file locations
     ErrorLog  /var/log/apache2/shaarli-error.log
     CustomLog /var/log/apache2/shaarli-access.log combined
 
-    # Let's Encrypt SSL configuration (recommended)
+    # SSL/TLS configuration (for Let's Encrypt certificates)
     SSLEngine             on
     SSLCertificateFile    /etc/letsencrypt/live/yourdomain.example.com/fullchain.pem
     SSLCertificateKeyFile /etc/letsencrypt/live/yourdomain.example.com/privkey.pem
     Include /etc/letsencrypt/options-ssl-apache.conf
 
-    # Self-signed SSL cert configuration
+    # SSL/TLS configuration (for self-signed certificates)
     #SSLEngine             on
     #SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
     #SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
@@ -99,127 +105,126 @@ In `/etc/apache2/sites-available/shaarli.conf`:
     #php_value error_log /var/log/apache2/shaarli-php-error.log
 
     <Directory /absolute/path/to/shaarli/>
-        #Required for .htaccess support
+        # Required for .htaccess support
         AllowOverride All
         Order allow,deny
         Allow from all
 
-        Options Indexes FollowSymLinks MultiViews #TODO is Indexes/Multiviews required?
-
-        # Optional - required for playvideos plugin
-        #Header set Content-Security-Policy "script-src 'self' 'unsafe-inline' https://www.youtube.com https://s.ytimg.com 'unsafe-eval'"
     </Directory>
 
 </VirtualHost>
 ```
 
-Enable this configuration with `sudo a2ensite shaarli`
+```bash
+# Enable the virtualhost
+sudo a2ensite shaarli
 
-_Note: If you use Apache 2.2 or lower, you need [mod_version](https://httpd.apache.org/docs/current/mod/mod_version.html) to be installed and enabled._
+# mod_ssl must be enabled to use TLS/SSL certificates
+# https://httpd.apache.org/docs/current/mod/mod_ssl.html
+sudo a2enmod ssl
 
-_Note: Apache module `mod_rewrite` must be enabled to use the REST API._
+# mod_rewrite must be enabled to use the REST API
+# https://httpd.apache.org/docs/current/mod/mod_rewrite.html
+sudo a2enmod rewrite
+
+# mod_version must be enabled if you use Apache 2.2 or lower
+# https://httpd.apache.org/docs/current/mod/mod_version.html
+# sudo a2enmod version
+
+# restart the apache service
+systemctl restart apache
+```
+
+Some [plugins](Plugins.md) may require additional configuration.
 
 
-## Nginx
-
-Here is a basic configuration example for the Nginx web server, using the [php-fpm](http://php-fpm.org) PHP FastCGI Process Manager, and Nginx's [FastCGI](https://en.wikipedia.org/wiki/FastCGI) module.
+------------------------
 
 <!--- TODO refactor everything below this point --->
 
-### Common setup
-Once Nginx and PHP-FPM are installed, we need to ensure:
+#### Nginx
 
-- Nginx and PHP-FPM are running using the _same user and group_
-- both these user and group have
-    - `read` permissions for Shaarli resources
-    - `execute` permissions for Shaarli directories _AND_ their parent directories
+```bash
+# install nginx
 
-On a production server:
 
-- `user:group` will likely be `http:http`, `www:www` or `www-data:www-data`
-- files will be located under `/var/www`, `/var/http` or `/usr/share/nginx`
-
-On a development server:
-
-- files may be located in a user's home directory
-- in this case, make sure both Nginx and PHP-FPM are running as the local user/group!
-
-For all following configuration examples, this user/group pair will be used:
-
-- `user:group = john:users`,
-
-which corresponds to the following service configuration:
-
-```ini
-; /etc/php/php-fpm.conf
-user = john
-group = users
-
-[...]
-listen.owner = john
-listen.group = users
 ```
+
+Nginx and PHP-FPM must be running using the same user and group, here we assume the user/group to be `www-data:www-data` but this may vary depending on your Linux distribution.
 
 ```nginx
-# /etc/nginx/nginx.conf
-user john users;
-
-http {
-    [...]
-}
+# A basic configuration example for the Nginx web server, using the php-fpm PHP interpreter, and Nginx's FastCGI module.
+# http://php-fpm.org
+# https://en.wikipedia.org/wiki/FastCGI
 ```
 
-### (Optional) Increase the maximum file upload size
-Some bookmark dumps generated by web browsers can be _huge_ due to the presence of Base64-encoded images and favicons, as well as extra verbosity when nesting links in (sub-)folders.
 
-To increase upload size, you will need to modify both nginx and PHP configuration:
+```
+
+
+
+# the nginx/php-fpm user/group must have read read permissions for Shaarli resources,
+# and execute permissions for Shaarli resources AND their parent directories
+```
 
 ```nginx
 # /etc/nginx/nginx.conf
 
 http {
     [...]
-
+    # (optional) increase the maximum file upload size:
+    # web browser bookmark exports can be large due to the presence of base64-encoded images and favicons/long subfolder names
     client_max_body_size 10m;
-
-    [...]
 }
 ```
 
-```ini
-# /etc/php5/fpm/php.ini
+If you increased the maximum file upload size you will also need to update `/etc/php5/fpm/php.ini`
 
+```ini
 [...]
+# (optional) increase the maximum file upload size:
 post_max_size = 10M
 [...]
+# (optional) increase the maximum file upload size:
 upload_max_filesize = 10M
 ```
 
 ### Minimal
-_WARNING: Use for development only!_ 
+_WARNING: Use for development only!_
 
 ```nginx
-user john users;
+user www-data www-data;
+# maximum number of worker processes
+# https://nginx.org/en/docs/ngx_core_module.html#worker_processes
 worker_processes  1;
 events {
+    # maximum number of simultaneous connections per worker
+    # https://nginx.org/en/docs/ngx_core_module.html#worker_connections
     worker_connections  1024;
 }
 
 http {
+    #
     include            mime.types;
+    #
     default_type       application/octet-stream;
+    #
     keepalive_timeout  20;
 
+    #
     index index.html index.php;
 
+    #
     server {
         listen       80;
         server_name  localhost;
         root         /home/john/web;
 
+        # log file locations
         access_log  /var/log/nginx/access.log;
         error_log   /var/log/nginx/error.log;
 
+        # 
         location /shaarli/ {
             try_files $uri /shaarli/index.php$is_args$args;
             access_log  /var/log/nginx/shaarli.access.log;
