@@ -143,7 +143,7 @@ This will create the following archives:
 
 The archives need to be manually uploaded on the previously created GitHub release.
 
-### Update `stable` and `latest` branches
+### Update the `latest` branch
 
 ```
 $ git checkout latest
@@ -152,10 +152,4 @@ $ git merge v0.5.0
 # fix eventual conflicts
 $ make test
 $ git push upstream latest
-$ git checkout stable
-# latest previous major
-$ git merge v0.4.5 
-# fix eventual conflicts
-$ make test
-$ git push upstream stable
 ```
