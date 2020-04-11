@@ -38,13 +38,6 @@ Extension | Required? | Usage
 Some [plugins](Plugins.md) may require additional configuration.
 
 
-## Configuration
-
-Here are links to useful guides on setting up a web server. You can find example webserver configurations for Shaarli further down this page.
-
-- [How to install the Apache web server](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-debian-10)
-- [How to install the Nginx web server](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-debian-10)
-
 ### SSL/TLS (HTTPS)
 
 We recommend setting up [HTTPS](https://en.wikipedia.org/wiki/HTTPS) on your webserver for secure communication between clients and the server.
@@ -68,15 +61,20 @@ The following examples assume a Debian-based operating system is installed. On o
 
 #### Apache
 
+Guide on setting up the Apache web server: [How to install the Apache web server](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-debian-10)
+
+
 ```bash
 # Install apache and modules
-sudo apt install TODO
+sudo apt update
+sudo apt install apache2 libapache2-mod-php php-json php-mbstring php-gd php-intl php-curl php-gettext
 
 # Create a document root for the apache virtualhost
-sudo mkdir -p /var/www/shaarli.mydomain.org/
-
 # Edit the virtualhost configuration file with your favorite editor
-sudo nano /etc/apache2/sites-available/shaarli.conf
+sudo mkdir -p /var/www/shaarli.mydomain.org/
+sudo chown -R www-data:root /var/www/shaarli.mydomain.org
+sudo chmod -R u=rX /var/www/shaarli.mydomain.org
+sudo nano /etc/apache2/sites-available/shaarli.mydomain.org.conf
 ```
 
 ```apache
@@ -88,13 +86,13 @@ sudo nano /etc/apache2/sites-available/shaarli.conf
     # Log level. Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
     LogLevel  warn
     # Log file locations
-    ErrorLog  /var/log/apache2/shaarli-error.log
-    CustomLog /var/log/apache2/shaarli-access.log combined
+    ErrorLog  /var/log/apache2/error.log
+    CustomLog /var/log/apache2/access.log combined
 
     # SSL/TLS configuration (for Let's Encrypt certificates)
     SSLEngine             on
-    SSLCertificateFile    /etc/letsencrypt/live/yourdomain.example.com/fullchain.pem
-    SSLCertificateKeyFile /etc/letsencrypt/live/yourdomain.example.com/privkey.pem
+    SSLCertificateFile    /etc/letsencrypt/live/shaarli.mydomain.org/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/shaarli.mydomain.org/privkey.pem
     Include /etc/letsencrypt/options-ssl-apache.conf
 
     # SSL/TLS configuration (for self-signed certificates)
@@ -108,12 +106,11 @@ sudo nano /etc/apache2/sites-available/shaarli.conf
     #php_value error_reporting 2147483647
     #php_value error_log /var/log/apache2/shaarli-php-error.log
 
-    <Directory /absolute/path/to/shaarli/>
+    <Directory /var/www/shaarli.mydomain.org/>
         # Required for .htaccess support
         AllowOverride All
         Order allow,deny
         Allow from all
-
     </Directory>
 
 </VirtualHost>
@@ -131,7 +128,7 @@ sudo a2enmod ssl
 # https://httpd.apache.org/docs/current/mod/mod_rewrite.html
 sudo a2enmod rewrite
 
-# mod_version must be enabled if you use Apache 2.2 or lower
+# mod_version must only be enabled if you use Apache 2.2 or lower
 # https://httpd.apache.org/docs/current/mod/mod_version.html
 # sudo a2enmod version
 
@@ -147,159 +144,86 @@ systemctl restart apache
 
 #### Nginx
 
+Guide on setting up the Nginx web server: [How to install the Nginx web server](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-debian-10)
+
+You will also need to install the [PHP-FPM](http://php-fpm.org) interpreter as detailed [here](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mariadb-php-lemp-stack-on-debian-10#step-3-%E2%80%94-installing-php-for-processing). Nginx and PHP-FPM must be running using the same user and group, here we assume the user/group to be `www-data:www-data` but this may vary depending on your Linux distribution.
+
+
 ```bash
 # install nginx
+sudo apt update
+sudo apt install nginx php-fpm
 
-
-```
-
-Nginx and PHP-FPM must be running using the same user and group, here we assume the user/group to be `www-data:www-data` but this may vary depending on your Linux distribution.
-
-```nginx
-# A basic configuration example for the Nginx web server, using the php-fpm PHP interpreter, and Nginx's FastCGI module.
-# http://php-fpm.org
-# https://en.wikipedia.org/wiki/FastCGI
-```
-
-
-```
-
-
-
-# the nginx/php-fpm user/group must have read read permissions for Shaarli resources,
-# and execute permissions for Shaarli resources AND their parent directories
+# Create a document root for the apache virtualhost
+# Edit the virtualhost configuration file with your favorite editor
+sudo mkdir -p /var/www/shaarli.mydomain.org/
+sudo chown -R www-data:root /var/www/shaarli.mydomain.org
+sudo chmod -R u=rX /var/www/shaarli.mydomain.org
+sudo nano /etc/nginx/sites-available/shaarli.mydomain.org
 ```
 
 ```nginx
-# /etc/nginx/nginx.conf
+server {
+    listen       80;
+    server_name  shaarli.mydomain.org;
+    root         /var/www/shaarli.mydomain.org;
 
-http {
-    [...]
-    # (optional) increase the maximum file upload size:
-    # web browser bookmark exports can be large due to the presence of base64-encoded images and favicons/long subfolder names
-    client_max_body_size 10m;
-}
-```
+    # log file locations
+    access_log  /var/log/nginx/access.log combined;
+    error_log   /var/log/nginx/error.log;
 
-If you increased the maximum file upload size you will also need to update `/etc/php5/fpm/php.ini`
+    # increase the maximum file upload size if needed: by default nginx limits file upload to 1MB (413 Entity Too Large error)
+    # client_max_body_size 1m;
 
-```ini
-[...]
-# (optional) increase the maximum file upload size:
-post_max_size = 10M
-[...]
-# (optional) increase the maximum file upload size:
-upload_max_filesize = 10M
-```
-
-### Minimal
-_WARNING: Use for development only!_
-
-```nginx
-user www-data www-data;
-# maximum number of worker processes
-# https://nginx.org/en/docs/ngx_core_module.html#worker_processes
-worker_processes  1;
-events {
-    # maximum number of simultaneous connections per worker
-    # https://nginx.org/en/docs/ngx_core_module.html#worker_connections
-    worker_connections  1024;
-}
-
-http {
-    #
-    include            mime.types;
-    #
-    default_type       application/octet-stream;
-    #
-    keepalive_timeout  20;
-
-    #
-    index index.html index.php;
-
-    #
-    server {
-        listen       80;
-        server_name  localhost;
-        root         /home/john/web;
-
-        # log file locations
-        access_log  /var/log/nginx/access.log;
-        error_log   /var/log/nginx/error.log;
-
-        # 
-        location /shaarli/ {
-            try_files $uri /shaarli/index.php$is_args$args;
-            access_log  /var/log/nginx/shaarli.access.log;
-            error_log   /var/log/nginx/shaarli.error.log;
-        }
-
-        location ~ (index)\.php$ {
-            try_files $uri =404;
-            fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
-            fastcgi_index  index.php;
-            include        fastcgi.conf;
-        }
+    # relative path to shaarli from the root of the webserver
+    location / {
+        index index.php;
+        try_files $uri /index.php$is_args$args;
     }
+
+    location ~ (index)\.php$ {
+        try_files $uri =404;
+        # Slim - split URL path into (script_filename, path_info)
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        # filter and proxy PHP requests to PHP-FPM
+        fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
+        fastcgi_index  index.php;
+        include        fastcgi.conf;
+    }
+
+    location ~ \.php$ {
+        # deny access to all other PHP scripts
+        deny all;
+    }
+
+    location ~ /\. {
+        # deny access to dotfiles
+        access_log off;
+        log_not_found off;
+        deny all;
+    }
+
+    location ~ ~$ {
+        # deny access to temp editor files, e.g. "script.php~"
+        access_log off;
+        log_not_found off;
+        deny all;
+    }
+
+    # allow client-side caching of static files
+    location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+        expires    max;
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+
 }
 ```
 
 ### Modular
 The previous setup is sufficient for development purposes, but has several major caveats:
 
-- every content that does not match the PHP rule will be sent to client browsers:
-    - dotfiles - in our case, `.htaccess`
-    - temporary files, e.g. Vim or Emacs files: `index.php~`
-- asset / static resource caching is not optimized
-- if serving several PHP sites, there will be a lot of duplication: `location /shaarli/`, `location /mysite/`, etc.
 
-To solve this, we will split Nginx configuration in several parts, that will be included when needed:
-
-```nginx
-# /etc/nginx/deny.conf
-location ~ /\. {
-    # deny access to dotfiles
-    access_log off;
-    log_not_found off;
-    deny all;
-}
-
-location ~ ~$ {
-    # deny access to temp editor files, e.g. "script.php~"
-    access_log off;
-    log_not_found off;
-    deny all;
-}
-```
-
-```nginx
-# /etc/nginx/php.conf
-location ~ (index)\.php$ {
-    # Slim - split URL path into (script_filename, path_info)
-    try_files $uri =404;
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-
-    # filter and proxy PHP requests to PHP-FPM
-    fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
-    fastcgi_index  index.php;
-    include        fastcgi.conf;
-}
-
-location ~ \.php$ {
-    # deny access to all other PHP scripts
-    deny all;
-}
-```
-
-```nginx
-# /etc/nginx/static_assets.conf
-location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
-    expires    max;
-    add_header Pragma public;
-    add_header Cache-Control "public, must-revalidate, proxy-revalidate";
-}
-```
 
 ```nginx
 # /etc/nginx/nginx.conf
@@ -448,3 +372,20 @@ See [[1]](https://en.wikipedia.org/wiki/Robots_exclusion_standard), [[2]](https:
 - [PHP 7 Changelog](http://php.net/ChangeLog-7.php)
 - [PHP 5 Changelog](http://php.net/ChangeLog-5.php)
 - [PHP: Bugs](https://bugs.php.net/)
+
+
+## Allow import of large browser bookmarks export
+
+Web browser bookmark exports can be large due to the presence of base64-encoded images and favicons/long subfolder names. Edit the php configuration file
+
+- Apache: `/etc/php/<PHP_VERSION>/apache2/php.ini`
+- Nginx + PHP-FPM: `/etc/php/<PHP_VERSION>/fpm/php.ini` (in addition to `client_max_body_size` in the [Nginx configuration](#nginx))
+
+```ini
+[...]
+# (optional) increase the maximum file upload size:
+post_max_size = 10M
+[...]
+# (optional) increase the maximum file upload size:
+upload_max_filesize = 10M
+```
