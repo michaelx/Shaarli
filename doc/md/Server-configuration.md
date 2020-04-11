@@ -1,3 +1,4 @@
+# Server configuration
 
 - [Prerequisites](#prerequisistes)
 - [Apache](#apache)
@@ -33,6 +34,9 @@ Extension | Required? | Usage
 [`php-curl`](http://php.net/manual/en/book.curl.php) | optional | using cURL for fetching webpages and thumbnails in a more robust way
 [`php-gettext`](http://php.net/manual/en/book.gettext.php) | optional | Use the translation system in gettext mode (faster)
 --------------------------------------------------------------------------------
+
+Some [plugins](Plugins.md) may require additional configuration.
+
 
 ## Configuration
 
@@ -135,7 +139,6 @@ sudo a2enmod rewrite
 systemctl restart apache
 ```
 
-Some [plugins](Plugins.md) may require additional configuration.
 
 
 ------------------------
