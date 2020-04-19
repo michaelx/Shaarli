@@ -1,12 +1,3 @@
-## Backup and restore the datastore file
-
-Backup the file `data/datastore.php` (by FTP or SSH). Restore by putting the file back in place.
-
-Example command:
-```bash
-rsync -avzP my.server.com:/var/www/shaarli/data/datastore.php datastore-$(date +%Y-%m-%d_%H%M).php
-```
-
 ## Export links as...
 
 To export links as an HTML file, under _Tools > Export_, choose:

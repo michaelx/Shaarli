@@ -18,6 +18,7 @@ pages:
     - Download and Installation: Download-and-Installation.md
     - Upgrade and migration: Upgrade-and-migration.md
     - Server configuration: Server-configuration.md
+    - Backup and restore: Backup-and-restore.md
     - Shaarli configuration: Shaarli-configuration.md
     - Plugins: Plugins.md
 - Docker:
@@ -33,7 +34,7 @@ pages:
     - Community & Related software: Community-&-Related-software.md
 - Guides:
     - Install Shaarli on Debian 9 with Docker: guides/install-shaarli-with-debian9-and-docker.md
-    - Backup, restore, import and export: guides/backup-restore-import-export.md
+    - Import and export: guides/import-export.md
     - Various hacks: guides/various-hacks.md
 - Development:
     - Development guidelines: Development-guidelines.md
