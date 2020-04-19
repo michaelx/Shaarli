@@ -179,8 +179,8 @@ server {
     error_log   /var/log/nginx/error.log;
 
     # paths to private key and certificates for SSL/TLS
-    ssl_certificate      /home/john/ssl/localhost.crt;
-    ssl_certificate_key  /home/john/ssl/localhost.key;
+    ssl_certificate      /etc/ssl/shaarli.mydomain.org.crt;
+    ssl_certificate_key  /etc/ssl/private/shaarli.mydomain.org.key;
 
 
     # increase the maximum file upload size if needed: by default nginx limits file upload to 1MB (413 Entity Too Large error)
