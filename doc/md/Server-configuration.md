@@ -284,14 +284,47 @@ It is recommended to remove the `phpinfo.php` when no logner needed as it public
 Shaarli disallows indexing and crawling of your local documentation pages by search engines, using `<meta name="robots">` HTML tags.
 Your Shaarli instance and other pages you host may still be indexed by various robots on the public Internet, that do not respect this header.
 
+Another way is to create a `robots.txt` file at the root of your webserver:
+
+```
+User-agent: *
+Disallow: /
+```
+
 - [Robots exclusion standard](https://en.wikipedia.org/wiki/Robots_exclusion_standard)
 - [Introduction to robots.txt](https://support.google.com/webmasters/answer/6062608?hl=en)
 - [Robots meta tag, data-nosnippet, and X-Robots-Tag specifications](https://developers.google.com/search/reference/robots_meta_tag)
+- [About robots.txt](http://www.robotstxt.org)
+- [About the robots META tag](https://www.robotstxt.org/meta.html)
 
 
-## See also
+## Fail2ban
 
- * [Server security](Server-security.md)
+[`fail2ban`](http://www.fail2ban.org/wiki/index.php/Main_Page) is an intrusion prevention framework that reads server (Apache, SSH, etc.) and uses `iptables` profiles to block brute-force attempts. You need to create a filter to detect shaarli login failures in logs, and a jail configuation to configure the behavior when failed login attempts are detected:
+
+```ini
+# /etc/fail2ban/filter.d/shaarli-auth.conf
+[INCLUDES]
+before = common.conf
+[Definition]
+failregex = \s-\s<HOST>\s-\sLogin failed for user.*$
+ignoreregex = 
+```
+
+```ini
+# /etc/fail2ban/jail.local
+[shaarli-auth]
+enabled  = true
+port     = https,http
+filter   = shaarli-auth
+logpath  = /var/www/shaarli.mydomain.org/data/log.txt
+# allow 3 login attempts per IP address
+# (over a period specified by findtime = in /etc/fail2ban/jail.conf)
+maxretry = 3
+# permanently ban the IP address after reaching the limit
+bantime = -1
+```
+
 
 #### References
 
