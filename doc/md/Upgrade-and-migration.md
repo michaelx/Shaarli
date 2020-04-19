@@ -7,88 +7,57 @@ The current version is present in the `shaarli_version.php` file.
 
 ### Backup your data
 
-Shaarli stores all user data under the `data` directory:
+Shaarli stores all user data and [configuration](Shaarli-configuration.md) under the `data` directory. [Backup](Backup-and-restore.md) this repository _before_ upgrading Shaarli. You will need to restore it after the following upgrade steps.
 
-- `data/config.json.php` (or `data/config.php` for older Shaarli versions) - main configuration file
-- `data/datastore.php` - bookmarked links
-- `data/ipbans.php` - banned IP addresses
-- `data/updates.txt` - contains all automatic update to the configuration and datastore files already run
 
-See [Shaarli configuration](Shaarli-configuration) for more information about Shaarli resources.
+## Upgrading from ZIP archives
 
-It is recommended to backup this repository _before_ starting updating/upgrading Shaarli:
+All tagged revisions can be downloaded as tarballs or ZIP archives from the [releases](https://github.com/shaarli/Shaarli/releases) page. See [Download and Installation](Download-and-Installation) for details.
 
-- users with SSH access: copy or archive the directory to a temporary location
-- users with FTP access: download a local copy of your Shaarli installation using your favourite client
+- Download the archive to the server, and extract it
+- OR if you don't have shell access/shared hosting, download it locally, extract it, and upload it to the server
+- Then overwrite your Shaarli installation. **All data will be lost, see _Backup your data_ above.**
+- If you use gettext mode for translations (not the default), reload your web server.
+- Restore backups of the `data` directory
+- Access your fresh Shaarli installation from a web browser; the configuration and data store will then be automatically updated, and new settings added to `data/config.json.php` (see [Shaarli configuration](Shaarli configuration) for more details).
 
-### Migrating data from a previous installation
 
-As all user data is kept under `data`, this is the only directory you need to worry about when migrating to a new installation, which corresponds to the following steps:
-
-- backup the `data` directory
-- install or update Shaarli:
-    - fresh installation - see [Download and Installation](Download-and-Installation)
-    - update - see the following sections
-- check or restore the `data` directory
-
-## Recommended : Upgrading from release archives
-
-All tagged revisions can be downloaded as tarballs or ZIP archives from the [releases](https://github.com/shaarli/Shaarli/releases) page.
-
-We recommend that you use the latest release tarball with the `-full` suffix. It contains the dependencies, please read [Download and Installation](Download-and-Installation) for `git` complete instructions.
-
-Once downloaded, extract the archive locally and update your remote installation (e.g. via FTP) -be sure you keep the content of the `data` directory!
-
-If you use translations in gettext mode - meaning you manually changed the default mode -,
-reload your web server.
-
-After upgrading, access your fresh Shaarli installation from a web browser; the configuration and data store will then be automatically updated, and new settings added to `data/config.json.php` (see [Shaarli configuration](Shaarli configuration) for more details).
-
-## Upgrading with Git
+## Upgrading from Git
 
 ### Updating a community Shaarli
 
-If you have installed Shaarli from the [community Git repository](Download#clone-with-git-recommended), simply [pull new changes](https://www.git-scm.com/docs/git-pull) from your local clone:
+If you have installed Shaarli from the https://github.com/shaarli/Shaarli, pull new changes from your local clone:
 
 ```bash
-$ cd /path/to/shaarli
-$ git pull
-
-From github.com:shaarli/Shaarli
- * branch            master     -> FETCH_HEAD
-Updating ebd67c6..521f0e6
-Fast-forward
- application/Url.php   | 1 +
- shaarli_version.php   | 2 +-
- tests/Url/UrlTest.php | 1 +
- 3 files changed, 3 insertions(+), 1 deletion(-)
+cd /var/www/shaarli.mydomain.org/
+git pull
 ```
 
-Shaarli >= `v0.8.x`: install/update third-party PHP dependencies using [Composer](https://getcomposer.org/):
+Since Shaarli `v0.8` PHP dependencies must be updated using [Composer](https://getcomposer.org/):
 
 ```bash
-$ composer install --no-dev
-
-Loading composer repositories with package information
-Updating dependencies
-  - Installing shaarli/netscape-bookmark-parser (v1.0.1)
-    Downloading: 100%
+cd /var/www/shaarli.mydomain.org/
+composer install --no-dev
 ```
 
-Shaarli >= `v0.9.2` supports translations:
+Since Shaarli `v0.9.2`, translations must be updated:
 
 ```bash
 $ make translate
 ```
 
 If you use translations in gettext mode, reload your web server.
+```bash
+sudo systemctl reload apache
+sudo systemctl reload nginx
+```
 
-Shaarli >= `v0.10.0` manages its front-end dependencies with nodejs. You need to install 
-[yarn](https://yarnpkg.com/lang/en/docs/install/):
+Since Shaarli `v0.10.0` front-end dependencies are managed with nodejs and [yarn](https://yarnpkg.com/lang/en/docs/install/):
 
 ```bash
 $ make build_frontend
 ``` 
+
 
 ### Migrating and upgrading from Sebsauvage's repository
 
@@ -213,21 +182,5 @@ details).
 
 ## Troubleshooting
 
-If the solutions provided here don't work, please open an issue specifying which version you're upgrading from and to.
+If the solutions provided here don't work, see [Troubleshooting](Troubleshooting.md) and/or open an issue specifying which version you're upgrading from and to.
 
-### You must specify an integer as a key
-
-In `v0.8.1` we changed how link keys are handled (from timestamps to incremental integers).
-Take a look at `data/updates.txt` content.
-
-#### `updates.txt` contains `updateMethodDatastoreIds`
-
-Try to delete it and refresh your page while being logged in.
-
-#### `updates.txt` doesn't exist or doesn't contain `updateMethodDatastoreIds`
-
-1. Create `data/updates.txt` if it doesn't exist
-2. Paste this string in the update file `;updateMethodRenameDashTags;`
-3. Login to Shaarli
-4. Delete the update file
-5. Refresh

@@ -71,11 +71,30 @@ This can be caused by several things:
 - You may be using OperaTurbo or OperaMini, which use their own proxies which may change from time to time.
 - If you have another application on the same webserver where Shaarli is installed, these application may forcefully expire php sessions.
 
+
 ### Old apache versions, Internal Server Error
 
 If you hosting provider only provides apache 2.2 and no support for `mod_version`, `.htaccess` files may cause 500 errors (Internal Server Error). See [this workaround](https://github.com/shaarli/Shaarli/issues/1196#issuecomment-412271085).
+
 
 ## Sessions do not seem to work correctly on your server
 
 Follow the instructions in the error message. Make sure you are accessing shaarli via a direct IP address or a proper hostname. If you have **no dots** in the hostname (e.g. `localhost` or `http://my-webserver/shaarli/`), some browsers will not store cookies at all (this respects the [HTTP cookie specification](http://curl.haxx.se/rfc/cookie_spec.html)).
 
+
+### Upgrade: You must specify an integer as a key
+
+In `v0.8.1` we changed how link keys are handled (from timestamps to incremental integers). Take a look at `data/updates.txt` content.
+
+
+#### Upgrade: `updates.txt` contains `updateMethodDatastoreIds`
+
+Try to delete it and refresh your page while being logged in.
+
+#### Upgrade: `updates.txt` doesn't exist or doesn't contain `updateMethodDatastoreIds`
+
+1. Create `data/updates.txt` if it doesn't exist
+2. Paste this string in the update file `;updateMethodRenameDashTags;`
+3. Login to Shaarli
+4. Delete the update file
+5. Refresh
