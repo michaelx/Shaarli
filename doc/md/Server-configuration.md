@@ -166,11 +166,25 @@ sudo nano /etc/nginx/sites-available/shaarli.mydomain.org
 server {
     listen       80;
     server_name  shaarli.mydomain.org;
+
+    # redirect all plain HTTP requests to HTTPS
+    return 301 https://shaarli.mydomain.org$request_uri;
+}
+
+server {
+    listen       443 ssl;
+    server_name  shaarli.mydomain.org;
     root         /var/www/shaarli.mydomain.org;
 
     # log file locations
+    # combined log format prepends the virtualhost/domain name to log entries
     access_log  /var/log/nginx/access.log combined;
     error_log   /var/log/nginx/error.log;
+
+    # paths to private key and certificates for SSL/TLS
+    ssl_certificate      /home/john/ssl/localhost.crt;
+    ssl_certificate_key  /home/john/ssl/localhost.key;
+
 
     # increase the maximum file upload size if needed: by default nginx limits file upload to 1MB (413 Entity Too Large error)
     # client_max_body_size 1m;
@@ -210,6 +224,11 @@ server {
         deny all;
     }
 
+    location = /favicon.ico {
+        # serve the Shaarli favicon from its custom location
+        alias /var/www/shaarli/images/favicon.ico;
+    }
+
     # allow client-side caching of static files
     location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
         expires    max;
@@ -220,113 +239,6 @@ server {
 }
 ```
 
-### Modular
-The previous setup is sufficient for development purposes, but has several major caveats:
-
-
-
-```nginx
-# /etc/nginx/nginx.conf
-[...]
-
-http {
-    [...]
-
-    root        /home/john/web;
-    access_log  /var/log/nginx/access.log;
-    error_log   /var/log/nginx/error.log;
-
-    server {
-        # virtual host for a first domain
-        listen       80;
-        server_name  my.first.domain.org;
-
-        location /shaarli/ {
-            # Slim - rewrite URLs
-            try_files $uri /shaarli/index.php$is_args$args;
-
-            access_log  /var/log/nginx/shaarli.access.log;
-            error_log   /var/log/nginx/shaarli.error.log;
-        }
-
-        location = /shaarli/favicon.ico {
-            # serve the Shaarli favicon from its custom location
-            alias /var/www/shaarli/images/favicon.ico;
-        }
-
-        include deny.conf;
-        include static_assets.conf;
-        include php.conf;
-    }
-
-    server {
-        # virtual host for a second domain
-        listen       80;
-        server_name  second.domain.com;
-
-        location /minigal/ {
-            access_log  /var/log/nginx/minigal.access.log;
-            error_log   /var/log/nginx/minigal.error.log;
-        }
-
-        include deny.conf;
-        include static_assets.conf;
-        include php.conf;
-    }
-}
-```
-
-### Redirect HTTP to HTTPS
-Assuming you have generated a (self-signed) key and certificate, and they are
-located under `/home/john/ssl/localhost.{key,crt}`, it is pretty straightforward
-to set an HTTP (:80) to HTTPS (:443) redirection to force SSL/TLS usage.
-
-```nginx
-# /etc/nginx/nginx.conf
-[...]
-
-http {
-    [...]
-
-    index index.html index.php;
-
-    root        /home/john/web;
-    access_log  /var/log/nginx/access.log;
-    error_log   /var/log/nginx/error.log;
-
-    server {
-        listen       80;
-        server_name  localhost;
-
-        return 301 https://localhost$request_uri;
-    }
-
-    server {
-        listen       443 ssl;
-        server_name  localhost;
-
-        ssl_certificate      /home/john/ssl/localhost.crt;
-        ssl_certificate_key  /home/john/ssl/localhost.key;
-
-        location /shaarli/ {
-            # Slim - rewrite URLs
-            try_files $uri /index.php$is_args$args;
-
-            access_log  /var/log/nginx/shaarli.access.log;
-            error_log   /var/log/nginx/shaarli.error.log;
-        }
-
-        location = /shaarli/favicon.ico {
-            # serve the Shaarli favicon from its custom location
-            alias /var/www/shaarli/images/favicon.ico;
-        }
-
-        include deny.conf;
-        include static_assets.conf;
-        include php.conf;
-    }
-}
-```
 
 ## Proxies
 
