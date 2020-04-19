@@ -315,7 +315,7 @@ To verify PHP settings currently set on the server
 - give read-only access to this file to the webserver user (eg. `sudo chown www-data:root /var/www/shaarli.mydomain.org/phpinfo.php && sudo chmod 0400 /var/www/shaarli.mydomain.org/phpinfo.php`)
 - Access the file from a web browser (eg. `https://shaarli.mydomain.org/phpinfo.php`) and look at the _Loaded Configuration File_ and _Scan this dir for additional .ini files_ entries
 
-It is recommended to remove the `phpinfo.php` when no logner needed as it publicly discloses details about your webserver configuration.
+It is recommended to remove the `phpinfo.php` when no longer needed as it publicly discloses details about your webserver configuration.
 
 
 ## Robots and crawlers
