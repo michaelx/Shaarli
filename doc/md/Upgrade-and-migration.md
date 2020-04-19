@@ -1,11 +1,9 @@
-## Preparation
-
-### Note your current version
+## Note your current version
 
 If anything goes wrong, it's important for us to know which version you're upgrading from.
 The current version is present in the `shaarli_version.php` file.
 
-### Backup your data
+## Backup your data
 
 Shaarli stores all user data and [configuration](Shaarli-configuration.md) under the `data` directory. [Backup](Backup-and-restore.md) this repository _before_ upgrading Shaarli. You will need to restore it after the following upgrade steps.
 
