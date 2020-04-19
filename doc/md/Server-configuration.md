@@ -253,7 +253,7 @@ See also [proxy-related](https://github.com/shaarli/Shaarli/issues?utf8=%E2%9C%9
 
 ## Allow import of large browser bookmarks export
 
-Web browser bookmark exports can be large due to the presence of base64-encoded images and favicons/long subfolder names. Edit the php configuration file
+Web browser bookmark exports can be large due to the presence of base64-encoded images and favicons/long subfolder names. Edit the PHP configuration file
 
 - Apache: `/etc/php/<PHP_VERSION>/apache2/php.ini`
 - Nginx + PHP-FPM: `/etc/php/<PHP_VERSION>/fpm/php.ini` (in addition to `client_max_body_size` in the [Nginx configuration](#nginx))
@@ -266,6 +266,18 @@ post_max_size = 10M
 # (optional) increase the maximum file upload size:
 upload_max_filesize = 10M
 ```
+
+To verify PHP settings currently set on the server
+- create a `phpinfo.php` in your webserver's document root (eg. `/var/www/shaarli.mydomain.org/phpinfo.php`):
+
+```php
+<?php phpinfo(); ?>
+```
+- give read-only access to this file to the webserver user (eg. `sudo chown www-data:root /var/www/shaarli.mydomain.org/phpinfo.php && sudo chmod 0400 /var/www/shaarli.mydomain.org/phpinfo.php`)
+- Access the file from a web browser (eg. `https://shaarli.mydomain.org/phpinfo.php`) and look at the _Loaded Configuration File_ and _Scan this dir for additional .ini files_ entries
+
+It is recommended to remove the `phpinfo.php` when no logner needed as it publicly discloses details about your webserver configuration.
+
 
 ## Robots and crawlers
 
