@@ -248,16 +248,20 @@ If Shaarli is served behind a proxy (i.e. there is a proxy server between client
 - [`X-Forwarded-Host`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host)
 - [`X-Forwarded-For`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For)
 
-In you [Shaarli configuration](Shaarli-configuration) `data/config.json.php`, add the public IP of your proxy under `security.trusted_proxies`.
+In your [Shaarli configuration](Shaarli-configuration) `data/config.json.php`, add the public IP of your proxy under `security.trusted_proxies`.
 
 See also [proxy-related](https://github.com/shaarli/Shaarli/issues?utf8=%E2%9C%93&q=label%3Aproxy+) issues.
+
 
 ## Robots and crawlers
 
 Shaarli disallows indexing and crawling of your local documentation pages by search engines, using `<meta name="robots">` HTML tags.
-Your Shaarli instance and other pages you host may still be indexed by various robots on the public Internet.
-You may want to setup a robots.txt file or other crawler control mechanism on your server.
-See [[1]](https://en.wikipedia.org/wiki/Robots_exclusion_standard), [[2]](https://support.google.com/webmasters/answer/6062608?hl=en) and [[3]](https://developers.google.com/search/reference/robots_meta_tag)
+Your Shaarli instance and other pages you host may still be indexed by various robots on the public Internet, that do not respect this header.
+
+- [Robots exclusion standard](https://en.wikipedia.org/wiki/Robots_exclusion_standard)
+- [Introduction to robots.txt](https://support.google.com/webmasters/answer/6062608?hl=en)
+- [Robots meta tag, data-nosnippet, and X-Robots-Tag specifications](https://developers.google.com/search/reference/robots_meta_tag)
+
 
 ## See also
 
