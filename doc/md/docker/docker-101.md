@@ -54,18 +54,13 @@ $ docker system prune
 <!-- TODO REAFCTOR EVERYTHING BELOW/MERGE WITH OTHER DOCKER DOCS -->
 
 
-### Systemd config
-Systemd is the process manager of choice on Debian-based distributions. Once you have a ``docker`` service installed, you can use the following steps to set up Shaarli to run on system start.
+### Running dockerized Shaarli as a systemd service
 
-```bash
-systemctl enable /etc/systemd/system/docker.shaarli.service
-systemctl start docker.shaarli
-systemctl status docker.*
-journalctl -f # inspect system log if needed
-```
+It is possible to start a dockerized Shaarli instance as a systemd service (systemd is the service management tool of choice on several distributions). After installing Docker, use the following steps to run your shaarli container Shaarli to run on system start.
 
-You will need sudo or a root terminal to perform some or all of the steps above. Here are the contents for the service file:
-```
+As root, create `/etc/systemd/system/docker.shaarli.service`:
+
+```ini
 [Unit]
 Description=Shaarli Bookmark Manager Container
 After=docker.service
@@ -89,7 +84,19 @@ ExecStart=/usr/bin/docker run \
 
 ExecStop=/usr/bin/docker rm -f ${hostname}-shaarli
 
-
 [Install]
 WantedBy=multi-user.target
 ```
+
+```bash
+# reload systemd services definitions
+systemctl daemon-reload
+# start the servie and enable it a boot time
+systemctl enable docker.shaarli.service --now
+# verify that the service is running
+systemctl status docker.*
+# inspect system log if needed
+journalctl -f
+```
+
+Another solution for automatic restarts is to deploy Shaarli from a docker-compose file as a service in a [Docker stack](https://docs.docker.com/engine/reference/commandline/stack_deploy/). This requires setting up [Swarm](https://docs.docker.com/engine/reference/commandline/swarm_init/) mode.

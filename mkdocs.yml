@@ -25,7 +25,6 @@ pages:
     - Docker 101: docker/docker-101.md
     - Shaarli images: docker/shaarli-images.md
     - Reverse proxy configuration: docker/reverse-proxy-configuration.md
-    - Docker resources: docker/resources.md
 - Usage:
     - Browsing and searching: Browsing-and-searching.md
     - Sharing content: Sharing-content.md
