@@ -136,11 +136,8 @@ sudo a2enmod rewrite
 systemctl restart apache
 ```
 
-
-
 ------------------------
 
-<!--- TODO refactor everything below this point --->
 
 #### Nginx
 
@@ -253,42 +250,6 @@ In your [Shaarli configuration](Shaarli-configuration) `data/config.json.php`, a
 See also [proxy-related](https://github.com/shaarli/Shaarli/issues?utf8=%E2%9C%93&q=label%3Aproxy+) issues.
 
 
-## Robots and crawlers
-
-Shaarli disallows indexing and crawling of your local documentation pages by search engines, using `<meta name="robots">` HTML tags.
-Your Shaarli instance and other pages you host may still be indexed by various robots on the public Internet, that do not respect this header.
-
-- [Robots exclusion standard](https://en.wikipedia.org/wiki/Robots_exclusion_standard)
-- [Introduction to robots.txt](https://support.google.com/webmasters/answer/6062608?hl=en)
-- [Robots meta tag, data-nosnippet, and X-Robots-Tag specifications](https://developers.google.com/search/reference/robots_meta_tag)
-
-
-## See also
-
- * [Server security](Server-security.md)
-
-#### Webservers
-
-- [Apache/PHP - error log per VirtualHost](http://stackoverflow.com/q/176) (StackOverflow)
-- [Apache - PHP: php_value vs php_admin_value and the use of php_flag explained](https://ma.ttias.be/php-php_value-vs-php_admin_value-and-the-use-of-php_flag-explained/)
-- [Server-side TLS (Apache)](https://wiki.mozilla.org/Security/Server_Side_TLS#Apache) (Mozilla)
-- [Nginx Beginner's guide](http://nginx.org/en/docs/beginners_guide.html)
-- [Nginx ngx_http_fastcgi_module](http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html)
-- [Nginx Pitfalls](http://wiki.nginx.org/Pitfalls)
-- [Nginx PHP configuration examples](http://kbeezie.com/nginx-configuration-examples/) (Karl Blessing)
-- [Server-side TLS (Nginx)](https://wiki.mozilla.org/Security/Server_Side_TLS#Nginx) (Mozilla)
-- [How to Create Self-Signed SSL Certificates with OpenSSL](http://www.xenocafe.com/tutorials/linux/centos/openssl/self_signed_certificates/index.php)
-- [How do I create my own Certificate Authority?](https://workaround.org/certificate-authority)
-
-#### PHP
-
-- [Travis configuration](https://github.com/shaarli/Shaarli/blob/master/.travis.yml)
-- [PHP: Supported versions](http://php.net/supported-versions.php)
-- [PHP: Unsupported versions](http://php.net/eol.php) _(EOL - End Of Life)_
-- [PHP 7 Changelog](http://php.net/ChangeLog-7.php)
-- [PHP 5 Changelog](http://php.net/ChangeLog-5.php)
-- [PHP: Bugs](https://bugs.php.net/)
-
 
 ## Allow import of large browser bookmarks export
 
@@ -305,3 +266,36 @@ post_max_size = 10M
 # (optional) increase the maximum file upload size:
 upload_max_filesize = 10M
 ```
+
+## Robots and crawlers
+
+Shaarli disallows indexing and crawling of your local documentation pages by search engines, using `<meta name="robots">` HTML tags.
+Your Shaarli instance and other pages you host may still be indexed by various robots on the public Internet, that do not respect this header.
+
+- [Robots exclusion standard](https://en.wikipedia.org/wiki/Robots_exclusion_standard)
+- [Introduction to robots.txt](https://support.google.com/webmasters/answer/6062608?hl=en)
+- [Robots meta tag, data-nosnippet, and X-Robots-Tag specifications](https://developers.google.com/search/reference/robots_meta_tag)
+
+
+## See also
+
+ * [Server security](Server-security.md)
+
+#### References
+
+- [Apache/PHP - error log per VirtualHost](http://stackoverflow.com/q/176) (StackOverflow)
+- [Apache - PHP: php_value vs php_admin_value and the use of php_flag explained](https://ma.ttias.be/php-php_value-vs-php_admin_value-and-the-use-of-php_flag-explained/)
+- [Server-side TLS (Apache)](https://wiki.mozilla.org/Security/Server_Side_TLS#Apache) (Mozilla)
+- [Nginx Beginner's guide](http://nginx.org/en/docs/beginners_guide.html)
+- [Nginx ngx_http_fastcgi_module](http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html)
+- [Nginx Pitfalls](http://wiki.nginx.org/Pitfalls)
+- [Nginx PHP configuration examples](http://kbeezie.com/nginx-configuration-examples/) (Karl Blessing)
+- [Server-side TLS (Nginx)](https://wiki.mozilla.org/Security/Server_Side_TLS#Nginx) (Mozilla)
+- [How to Create Self-Signed SSL Certificates with OpenSSL](http://www.xenocafe.com/tutorials/linux/centos/openssl/self_signed_certificates/index.php)
+- [How do I create my own Certificate Authority?](https://workaround.org/certificate-authority)
+- [Travis configuration](https://github.com/shaarli/Shaarli/blob/master/.travis.yml)
+- [PHP: Supported versions](http://php.net/supported-versions.php)
+- [PHP: Unsupported versions](http://php.net/eol.php) _(EOL - End Of Life)_
+- [PHP 7 Changelog](http://php.net/ChangeLog-7.php)
+- [PHP 5 Changelog](http://php.net/ChangeLog-5.php)
+- [PHP: Bugs](https://bugs.php.net/)
