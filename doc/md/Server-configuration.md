@@ -273,7 +273,7 @@ server {
 sudo ln -s /etc/nginx/sites-available/shaarli.mydomain.org /etc/nginx/sites-enabled/shaarli.mydomain.org
 # reload nginx configuration
 sudo systemctl reload nginx
-
+```
 
 
 ## Proxies
