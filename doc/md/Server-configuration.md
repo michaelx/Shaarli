@@ -46,7 +46,23 @@ For public-facing web servers this can be done using free SSL/TLS certificates f
 
  - [How to secure Apache with Let's Encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-debian-10)
  - [How to secure Nginx with Let's Encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-debian-10)
- - [How To Use Certbot Standalone Mode to Retrieve Let's Encrypt SSL Certificates](https://www.digitalocean.com/community/tutorials/how-to-use-certbot-standalone-mode-to-retrieve-let-s-encrypt-ssl-certificates-on-debian-10)
+ - [How To Use Certbot Standalone Mode to Retrieve Let's Encrypt SSL Certificates](https://www.digitalocean.com/community/tutorials/how-to-use-certbot-standalone-mode-to-retrieve-let-s-encrypt-ssl-certificates-on-debian-10).
+
+In short:
+
+```bash
+sudo apt install certbot
+# stop your webserver to allow certbot standalone to bind to port 80 (only needed on initial generation)
+sudo systemctl stop apache2
+sudo systemctl stop nginx
+# generate initial certificates
+# Let's Encrypt ACME servers must be able to access your webserver! (DNS records must be correctly pointing to  it, firewall/NAT needs to be open)
+sudo certbot certonly --standalone --noninteractive --agree-tos --email "admin@shaarli.mydomain.org" -d shaarli.mydomain.org
+# this will generate a private key and certificate at /etc/letsencrypt/live/shaarli.mydomain.org/{privkey,fullchain}.pem
+# restart the web server
+sudo systemctl start apache2
+sudo systemctl start nginx
+```
 
 If you don't want to rely on a certificate authority, or the server can only be accessed from your own network, you can also generate self-signed certificates. Not that this will generate security warnings in web browsers/clients trying to access Shaarli:
 
@@ -78,7 +94,24 @@ sudo nano /etc/apache2/sites-available/shaarli.mydomain.org.conf
 ```
 
 ```apache
-# A Basic configuration example for the Apache web server with mod_php
+# configuration example for the Apache web server with mod_php
+<VirtualHost *:80>
+    ServerName shaarli.mydomain.org
+    DocumentRoot /var/www/shaarli.mydomain.org/
+
+    # Log level. Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+    LogLevel  warn
+    # Log file locations
+    ErrorLog /var/log/apache2/error.log
+    CustomLog /var/log/apache2/access.log combined
+
+    # Automatic redirect to HTTPS, except for Let's Encrypt ACME challenge
+    RewriteEngine on
+    RewriteRule ^.well-known/acme-challenge/ - [L]
+    RewriteCond %{HTTP_HOST} =shaarli.mydomain.org
+    RewriteRule  ^ https://shaarli.mydomain.org%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
 <VirtualHost *:443>
     ServerName   shaarli.mydomain.org
     DocumentRoot /var/www/shaarli.mydomain.org/
