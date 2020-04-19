@@ -9,7 +9,7 @@ In most cases, you should download the latest Shaarli release from the [releases
 ```bash
 $ wget https://github.com/shaarli/Shaarli/releases/download/v0.10.4/shaarli-v0.10.4-full.zip
 $ unzip shaarli-v0.10.4-full.zip
-$ mv Shaarli /path/to/shaarli/
+$ mv Shaarli /var/www/shaarli.mydomain.org
 ```
 
 Also, please make sure your server is properly [configured](Server-configuration.md).
