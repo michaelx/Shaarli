@@ -33,7 +33,6 @@ Extension | Required? | Usage
 [`php-intl`](http://php.net/manual/en/book.intl.php) | optional | localized text sorting (e.g. `e->è->f`)
 [`php-curl`](http://php.net/manual/en/book.curl.php) | optional | using cURL for fetching webpages and thumbnails in a more robust way
 [`php-gettext`](http://php.net/manual/en/book.gettext.php) | optional | Use the translation system in gettext mode (faster)
---------------------------------------------------------------------------------
 
 Some [plugins](Plugins.md) may require additional configuration.
 

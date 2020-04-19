@@ -18,7 +18,6 @@ pages:
     - Download and Installation: Download-and-Installation.md
     - Upgrade and migration: Upgrade-and-migration.md
     - Server configuration: Server-configuration.md
-    - Server security: Server-security.md
     - Shaarli configuration: Shaarli-configuration.md
     - Plugins: Plugins.md
 - Docker:
