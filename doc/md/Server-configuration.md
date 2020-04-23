@@ -72,7 +72,24 @@ If you don't want to rely on a certificate authority, or the server can only be 
 
 ### Examples
 
-The following examples assume a Debian-based operating system is installed. On other distributions you may have to adapt details such as package installation procedures, configuration file locations, and webserver username/group.
+The following examples assume a Debian-based operating system is installed. On other distributions you may have to adapt details such as package installation procedures, configuration file locations, and webserver username/group (`www-data` or `httpd` are common values).
+
+Common steps for all web servers:
+
+```bash
+# Create a document root for the web server virtualhost
+sudo mkdir -p /var/www/shaarli.mydomain.org/
+# set files ownership, deny all access by the web server
+sudo chown -R www-data:root /var/www/shaarli.mydomain.org
+sudo chmod -R u=rwX /var/www/shaarli.mydomain.org
+# shaarli needs read access to these files/directories
+sudo chmod g+rX /var/www/shaarli.mydomain.org{/,/application,/plugins}
+sudo chmod g+r /var/www/shaarli.mydomain.org/{index.php,application/*.php,plugins/*.php,inc/,inc/*.php,inc/*.js,inc/*.css}
+# shaarli needs read/write access to these directories
+sudo chmod g+rwX /var/www/shaarli.mydomain.org/{cache,data,pagecache,tmp}
+```
+
+See [Directory structure](Directory-structure)
 
 #### Apache
 
@@ -84,11 +101,7 @@ Guide on setting up the Apache web server: [How to install the Apache web server
 sudo apt update
 sudo apt install apache2 libapache2-mod-php php-json php-mbstring php-gd php-intl php-curl php-gettext
 
-# Create a document root for the apache virtualhost
 # Edit the virtualhost configuration file with your favorite editor
-sudo mkdir -p /var/www/shaarli.mydomain.org/
-sudo chown -R www-data:root /var/www/shaarli.mydomain.org
-sudo chmod -R u=rX /var/www/shaarli.mydomain.org
 sudo nano /etc/apache2/sites-available/shaarli.mydomain.org.conf
 ```
 
@@ -179,15 +192,11 @@ You will also need to install the [PHP-FPM](http://php-fpm.org) interpreter as d
 
 
 ```bash
-# install nginx
+# install nginx and php-fpm
 sudo apt update
 sudo apt install nginx php-fpm
 
-# Create a document root for the apache virtualhost
 # Edit the virtualhost configuration file with your favorite editor
-sudo mkdir -p /var/www/shaarli.mydomain.org/
-sudo chown -R www-data:root /var/www/shaarli.mydomain.org
-sudo chmod -R u=rX /var/www/shaarli.mydomain.org
 sudo nano /etc/nginx/sites-available/shaarli.mydomain.org
 ```
 
@@ -363,6 +372,12 @@ maxretry = 3
 # permanently ban the IP address after reaching the limit
 bantime = -1
 ```
+
+## Access Shaarli
+
+Open https://shaarli.mydomain.org/ in your web browser and set basic configuration settings.
+
+If needed, edit the [configuration file](Shaarli-configuration)
 
 
 #### References

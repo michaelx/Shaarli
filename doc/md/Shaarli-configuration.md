@@ -1,44 +1,13 @@
-## Foreword
-
-**Do not edit configuration options in index.php! Your changes would be lost.** 
+## Shaarli configuration
 
 Once your Shaarli instance is installed, the file `data/config.json.php` is generated:
 * it contains all settings in JSON format, and can be edited to customize values
 * it defines which [plugins](Plugin-System) are enabled
 * its values override those defined in `index.php`
-* it is wrap in a PHP comment to prevent anyone accessing it, regardless of server configuration
+* it is wrapped in a PHP comment so that its contents are never served by the web server, regardless of configuration
 
-## File and directory permissions
+**Do not edit configuration options in index.php! Your changes would be lost.** 
 
-The server process running Shaarli must have:
-
-- `read` access to the following resources:
-    - PHP scripts: `index.php`, `application/*.php`, `plugins/*.php`
-    - 3rd party PHP and Javascript libraries: `inc/*.php`, `inc/*.js`
-    - static assets:
-        - CSS stylesheets: `inc/*.css`
-        - `images/*`
-    - RainTPL templates: `tpl/*.html`
-- `read`, `write` and `execution` access to the following directories:
-    - `cache` - thumbnail cache
-    - `data` - link data store, configuration options
-    - `pagecache` - Atom/RSS feed cache
-    - `tmp` - RainTPL page cache
-
-On a Linux distribution:
-
-- the web server user will likely be `www` or `http` (for Apache2)
-- it will be a member of a group of the same name: `www:www`, `http:http`
-- to give it access to Shaarli, either:
-    - unzip Shaarli in the default web server location (usually `/var/www/`) and set the web server user as the owner
-    - put users in the same group as the web server, and set the appropriate access rights
-- if you have a domain / subdomain to serve Shaarli, [configure the server](Server-configuration) accordingly
-
-## Configuration
-
-In `data/config.json.php`.
-
-See also [Plugin System](Plugin-System).
 
 ### Credentials
  
@@ -226,10 +195,3 @@ Must be an associative array: `translation domain => translation path`.
     }
 } ?>
 ```
-
-## Additional configuration
-
-The `playvideos` plugin may require that you adapt your server's 
-[Content Security Policy](https://github.com/shaarli/Shaarli/blob/master/plugins/playvideos/README.md#troubleshooting) 
-configuration to work properly.
-
