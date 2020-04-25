@@ -1,16 +1,8 @@
-# Server configuration
-
-- [Prerequisites](#prerequisistes)
-- [Apache](#apache)
-- [Nginx](#nginx)
-- [Proxies](#proxies)
-- [See also](#see-also)
-
 ## Requirements
 
 - A web server.
 - Write access to the Shaarli installation directory.
-- A PHP interpreter such as [Apache mod_php](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mariadb-php-lamp-stack-on-debian-10#step-3-%E2%80%94-installing-php) compatible with supported PHP versions:
+- A PHP interpreter compatible with supported PHP versions:
 
 Version | Status | Shaarli compatibility
 :---:|:---:|:---:
@@ -37,7 +29,7 @@ Extension | Required? | Usage
 Some [plugins](Plugins.md) may require additional configuration.
 
 
-### SSL/TLS (HTTPS)
+## SSL/TLS (HTTPS)
 
 We recommend setting up [HTTPS](https://en.wikipedia.org/wiki/HTTPS) on your webserver for secure communication between clients and the server.
 
@@ -70,7 +62,7 @@ If you don't want to rely on a certificate authority, or the server can only be 
 
 --------------------------------------------------------------------------------
 
-### Examples
+## Examples
 
 The following examples assume a Debian-based operating system is installed. On other distributions you may have to adapt details such as package installation procedures, configuration file locations, and webserver username/group (`www-data` or `httpd` are common values).
 
@@ -91,7 +83,7 @@ sudo chmod g+rwX /var/www/shaarli.mydomain.org/{cache,data,pagecache,tmp}
 
 See [Directory structure](Directory-structure)
 
-#### Apache
+### Apache
 
 Guide on setting up the Apache web server: [How to install the Apache web server](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-debian-10)
 
@@ -181,10 +173,8 @@ sudo a2enmod rewrite
 systemctl restart apache
 ```
 
-------------------------
 
-
-#### Nginx
+### Nginx
 
 Guide on setting up the Nginx web server: [How to install the Nginx web server](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-debian-10)
 
@@ -285,17 +275,122 @@ sudo systemctl reload nginx
 ```
 
 
-## Proxies
+## Reverse proxies
 
-If Shaarli is served behind a proxy (i.e. there is a proxy server between clients and the web server hosting Shaarli), please refer to the proxy server documentation for proper configuration. In particular, you have to ensure that the following server variables are properly set:
+If Shaarli is hosted on a server behind a [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) (i.e. there is a proxy server between clients and the web server hosting Shaarli), configure it accordingly. In this example:
 
-- [`X-Forwarded-Proto`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Proto)
-- [`X-Forwarded-Host`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host)
-- [`X-Forwarded-For`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For)
+
+- The Shaarli application server exposes port `10080` to the proxy (for example docker container started with `--publish 127.0.0.1:10080:80`).
+- The Shaarli application server runs at `127.0.0.1` (container). Replace with the server's IP address if running on a different machine.
+- Shaarli's Fully Qualified Domain Name (FQDN) is `shaarli.mydomain.org`.
+- No HTTPS is setup on the application server, SSL termination is done at the reverse proxy.
 
 In your [Shaarli configuration](Shaarli-configuration) `data/config.json.php`, add the public IP of your proxy under `security.trusted_proxies`.
 
 See also [proxy-related](https://github.com/shaarli/Shaarli/issues?utf8=%E2%9C%93&q=label%3Aproxy+) issues.
+
+
+### Apache
+
+```apache
+<VirtualHost *:80>
+    ServerName shaarli.mydomain.org
+    # Redirect HTTP to HTTPS
+    Redirect permanent / https://shaarli.mydomain.org
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName shaarli.mydomain.org
+
+    SSLEngine on
+    SSLCertificateFile    /path/to/certificate
+    SSLCertificateKeyFile /path/to/private/key
+
+    LogLevel warn
+    ErrorLog  /var/log/apache2/error.log
+    CustomLog /var/log/apache2/access.log combined
+
+    # let the proxied shaarli server/container know HTTPS URLs should be served
+    RequestHeader set X-Forwarded-Proto "https"
+
+    # send the original SERVER_NAME to the proxied host
+    ProxyPreserveHost On
+    
+    # pass requests to the proxied host
+    # sets X-Forwarded-For, X-Forwarded-Host and X-Forwarded-Server headers
+    ProxyPass        / http://127.0.0.1:10080/
+    ProxyPassReverse / http://127.0.0.1:10080/
+</VirtualHost>
+```
+
+
+### HAProxy
+
+
+```conf
+global
+    [...]
+
+defaults
+    [...]
+
+frontend http-in
+    bind :80
+    redirect scheme https code 301 if !{ ssl_fc }
+    bind :443 ssl crt /path/to/cert.pem
+    default_backend shaarli
+
+backend shaarli
+    mode http
+    option http-server-close
+    option forwardfor
+    reqadd X-Forwarded-Proto: https
+    server shaarli1 127.0.0.1:10080
+```
+
+
+### Nginx
+
+
+```nginx
+http {
+    [...]
+
+    index index.html index.php;
+
+    root        /home/john/web;
+    access_log  /var/log/nginx/access.log combined;
+    error_log   /var/log/nginx/error.log;
+
+    server {
+        listen       80;
+        server_name  shaarli.mydomain.org;
+        # redirect HTTP to HTTPS
+        return       301 https://shaarli.mydomain.org$request_uri;
+    }
+
+    server {
+        listen       443 ssl http2;
+        server_name  shaarli.mydomain.org;
+
+        ssl_certificate       /path/to/certificate
+        ssl_certificate_key   /path/to/private/key
+
+        location / {
+            proxy_set_header  X-Real-IP         $remote_addr;
+            proxy_set_header  X-Forwarded-For   $proxy_add_x_forwarded_for;
+            proxy_set_header  X-Forwarded-Proto $scheme;
+            proxy_set_header  X-Forwarded-Host  $host;
+
+            # pass requests to the proxied host
+            proxy_pass             http://localhost:10080/;
+            proxy_set_header Host  $host;
+            proxy_connect_timeout  30s;
+            proxy_read_timeout     120s;
+        }
+    }
+}
+```
 
 
 
@@ -315,21 +410,24 @@ post_max_size = 10M
 upload_max_filesize = 10M
 ```
 
-To verify PHP settings currently set on the server
-- create a `phpinfo.php` in your webserver's document root (eg. `/var/www/shaarli.mydomain.org/phpinfo.php`):
+To verify PHP settings currently set on the server, create a `phpinfo.php` in your webserver's document root
 
-```php
-<?php phpinfo(); ?>
+```bash
+# example
+echo '<?php phpinfo(); ?>' | sudo tee /var/www/shaarli.mydomain.org/phpinfo.php
+#give read-only access to this file to the webserver user
+sudo chown www-data:root /var/www/shaarli.mydomain.org/phpinfo.php
+sudo chmod 0400 /var/www/shaarli.mydomain.org/phpinfo.php
 ```
-- give read-only access to this file to the webserver user (eg. `sudo chown www-data:root /var/www/shaarli.mydomain.org/phpinfo.php && sudo chmod 0400 /var/www/shaarli.mydomain.org/phpinfo.php`)
-- Access the file from a web browser (eg. `https://shaarli.mydomain.org/phpinfo.php`) and look at the _Loaded Configuration File_ and _Scan this dir for additional .ini files_ entries
+
+Access the file from a web browser (eg. <https://shaarli.mydomain.org/phpinfo.php> and look at the _Loaded Configuration File_ and _Scan this dir for additional .ini files_ entries
 
 It is recommended to remove the `phpinfo.php` when no longer needed as it publicly discloses details about your webserver configuration.
 
 
 ## Robots and crawlers
 
-Shaarli disallows indexing and crawling of your local documentation pages by search engines, using `<meta name="robots">` HTML tags.
+Shaarli disallows indexing and crawling of your **local documentation pages** by search engines, using `<meta name="robots">` HTML tags.
 Your Shaarli instance and other pages you host may still be indexed by various robots on the public Internet, that do not respect this header.
 
 Another way is to create a `robots.txt` file at the root of your webserver:
@@ -348,7 +446,7 @@ Disallow: /
 
 ## Fail2ban
 
-[`fail2ban`](http://www.fail2ban.org/wiki/index.php/Main_Page) is an intrusion prevention framework that reads server (Apache, SSH, etc.) and uses `iptables` profiles to block brute-force attempts. You need to create a filter to detect shaarli login failures in logs, and a jail configuation to configure the behavior when failed login attempts are detected:
+[fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page) is an intrusion prevention framework that reads server (Apache, SSH, etc.) and uses `iptables` profiles to block brute-force attempts. You need to create a filter to detect shaarli login failures in logs, and a jail configuation to configure the behavior when failed login attempts are detected:
 
 ```ini
 # /etc/fail2ban/filter.d/shaarli-auth.conf
@@ -373,28 +471,29 @@ maxretry = 3
 bantime = -1
 ```
 
-## Access Shaarli
-
-Open https://shaarli.mydomain.org/ in your web browser and set basic configuration settings.
-
-If needed, edit the [configuration file](Shaarli-configuration)
-
-
 #### References
 
-- [Apache/PHP - error log per VirtualHost](http://stackoverflow.com/q/176) (StackOverflow)
+- [Apache/PHP - error log per VirtualHost - StackOverflow](http://stackoverflow.com/q/176)
 - [Apache - PHP: php_value vs php_admin_value and the use of php_flag explained](https://ma.ttias.be/php-php_value-vs-php_admin_value-and-the-use-of-php_flag-explained/)
-- [Server-side TLS (Apache)](https://wiki.mozilla.org/Security/Server_Side_TLS#Apache) (Mozilla)
+- [Server-side TLS (Apache) - Mozilla](https://wiki.mozilla.org/Security/Server_Side_TLS#Apache)
 - [Nginx Beginner's guide](http://nginx.org/en/docs/beginners_guide.html)
 - [Nginx ngx_http_fastcgi_module](http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html)
 - [Nginx Pitfalls](http://wiki.nginx.org/Pitfalls)
-- [Nginx PHP configuration examples](http://kbeezie.com/nginx-configuration-examples/) (Karl Blessing)
-- [Server-side TLS (Nginx)](https://wiki.mozilla.org/Security/Server_Side_TLS#Nginx) (Mozilla)
+- [Nginx PHP configuration examples - Karl Blessing](http://kbeezie.com/nginx-configuration-examples/)
+- [Apache 2.4 documentation](https://httpd.apache.org/docs/2.4/)
+- [Apache mod_proxy](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html)
+- [Apache Reverse Proxy Request Headers](https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#x-headers)
+- [HAProxy documentation](https://cbonte.github.io/haproxy-dconv/)
+- [Nginx documentation](https://nginx.org/en/docs/)
+- [`X-Forwarded-Proto`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Proto)
+- [`X-Forwarded-Host`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host)
+- [`X-Forwarded-For`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For)
+- [Server-side TLS (Nginx) - Mozilla](https://wiki.mozilla.org/Security/Server_Side_TLS#Nginx)
 - [How to Create Self-Signed SSL Certificates with OpenSSL](http://www.xenocafe.com/tutorials/linux/centos/openssl/self_signed_certificates/index.php)
 - [How do I create my own Certificate Authority?](https://workaround.org/certificate-authority)
 - [Travis configuration](https://github.com/shaarli/Shaarli/blob/master/.travis.yml)
 - [PHP: Supported versions](http://php.net/supported-versions.php)
-- [PHP: Unsupported versions](http://php.net/eol.php) _(EOL - End Of Life)_
+- [PHP: Unsupported versions (EOL/End-of-life)](http://php.net/eol.php)
 - [PHP 7 Changelog](http://php.net/ChangeLog-7.php)
 - [PHP 5 Changelog](http://php.net/ChangeLog-5.php)
 - [PHP: Bugs](https://bugs.php.net/)
