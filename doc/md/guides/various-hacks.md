@@ -1,21 +1,4 @@
-### Decode datastore content
 
-To display the array representing the data saved in `data/datastore.php`, use the following snippet:
-
-```php
-$data = "tZNdb9MwFIb... <Commented content inside datastore.php>";
-$out = unserialize(gzinflate(base64_decode($data)));
-echo "<pre>"; // Pretty printing is love, pretty printing is life
-print_r($out);
-echo "</pre>";
-exit;
-```
-This will output the internal representation of the datastore, "unobfuscated" (if this can really be considered obfuscation).
-
-Alternatively, you can transform to JSON format (and pretty-print if you have `jq` installed):
-```
-php -r 'print(json_encode(unserialize(gzinflate(base64_decode(preg_replace("!.*/\* (.+) \*/.*!", "$1", file_get_contents("data/datastore.php")))))));' | jq .
-```
 
 ### See also
 
