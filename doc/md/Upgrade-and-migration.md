@@ -10,7 +10,7 @@ Shaarli stores all user data and [configuration](Shaarli-configuration.md) under
 
 ## Upgrading from ZIP archives
 
-All tagged revisions can be downloaded as tarballs or ZIP archives from the [releases](https://github.com/shaarli/Shaarli/releases) page. See [Download and Installation](Download-and-Installation) for details.
+All tagged revisions can be downloaded as tarballs or ZIP archives from the [releases](https://github.com/shaarli/Shaarli/releases) page. See [Installation](Installation) for details.
 
 - Download the archive to the server, and extract it
 - OR if you don't have shell access/shared hosting, download it locally, extract it, and upload it to the server

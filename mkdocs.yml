@@ -15,16 +15,13 @@ site_dir: doc/html
 pages:
 - Home: index.md
 - Setup:
-    - Download and Installation: Download-and-Installation.md
+    - Installation: Installation.md
+    - Docker: Docker.md
     - Upgrade and migration: Upgrade-and-migration.md
     - Server configuration: Server-configuration.md
     - Backup and restore: Backup-and-restore.md
     - Shaarli configuration: Shaarli-configuration.md
     - Plugins: Plugins.md
-- Docker:
-    - Docker 101: docker/docker-101.md
-    - Shaarli images: docker/shaarli-images.md
-    - Reverse proxy configuration: docker/reverse-proxy-configuration.md
 - Usage:
     - Browsing and searching: Browsing-and-searching.md
     - Sharing content: Sharing-content.md
