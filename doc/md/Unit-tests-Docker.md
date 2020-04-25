@@ -2,7 +2,7 @@
 
 Read first:
 
-- [Docker 101](docker/docker-101.md)
+- [Docker](Docker.md)
 - [Docker resources](docker/resources.md)
 - [Unit tests](Unit-tests.md)
 

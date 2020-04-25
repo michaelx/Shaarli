@@ -219,9 +219,8 @@ at `https://<MY_SHAARLI_DOMAIN>`.
      alt="Shaarli installation page" />
 
 ## Resources
-### Related Shaarli documentation
-- [Docker 101](../docker/docker-101.md)
-- [Shaarli images](../docker/shaarli-images.md)
+
+- [Docker](Docker.md)
 
 ### Hosting providers
 - [DigitalOcean](https://www.digitalocean.com/)
