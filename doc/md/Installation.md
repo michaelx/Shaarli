@@ -2,7 +2,7 @@
 
 ## From release ZIP
 
-To install Shaarli, simply place the files from the latest [release .zip file]([releases](https://github.com/shaarli/Shaarli/releases) archive under your webserver's Document Root (directly at the document root, or in a subdirectory). Download our **shaarli-vX.X.X-full** archive to include dependencies.
+To install Shaarli, simply place the files from the latest [release .zip file](https://github.com/shaarli/Shaarli/releases) archive under your webserver's Document Root (directly at the document root, or in a subdirectory). Download our **shaarli-vX.X.X-full** archive to include dependencies.
 
 ```bash
 $ wget https://github.com/shaarli/Shaarli/releases/download/v0.10.4/shaarli-v0.10.4-full.zip
