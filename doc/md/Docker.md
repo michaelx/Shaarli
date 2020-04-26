@@ -1,8 +1,28 @@
 # Docker
 
+[Docker](https://docs.docker.com/get-started/overview/) is an open platform for developing, shipping, and running applications
+
 ## Install Docker
 
-Install [Docker](https://www.docker.com/), by following the instructions relevant to your OS / distribution, and start the service.
+Install [Docker](https://www.docker.com/), by following the instructions relevant to your OS / distribution, and start the service. For example on [Debian](https://docs.docker.com/engine/install/debian/):
+
+```bash
+# update your package lists
+$ sudo apt update
+# remove old versions
+$ sudo apt-get remove docker docker-engine docker.io containerd runc
+# install requirements
+$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+# add docker's GPG signing key
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+# add the repository
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+# install docker engine
+$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+# verify that Docker is properly configured
+root@stretch-shaarli-02:~$ docker run hello-world
+```
 
 
 ## Get and run a Shaarli image
@@ -58,17 +78,32 @@ docker ps -a | grep myshaarli
 
 ```
 
-## Compose file
+## Docker Compose
 
-A `docker-compose.yml` file can be used to run a persistent/autostarted shaarli service using [docker-compose](https://docs.docker.com/compose/) or in a [Docker stack](https://docs.docker.com/engine/reference/commandline/stack_deploy/)/[Swarm](https://docs.docker.com/engine/reference/commandline/swarm_init/).
+[Docker Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container Docker applications.
 
-```yaml
+A `docker-compose.yml` file can be used to run a persistent/autostarted shaarli service using docker-compose or in a [Docker stack](https://docs.docker.com/engine/reference/commandline/stack_deploy/)/[Swarm](https://docs.docker.com/engine/reference/commandline/swarm_init/).
 
-services:
-  shaarli:
+Shaarli provides configuration file for Docker Compose, that will setup a Shaarli instance, a [Træfik](https://hub.docker.com/_/traefik/) instance with [Let's Encrypt](https://letsencrypt.org/) certificates, a Docker network, and volumes for Shaarli data and Træfik TLS configuration and certificates.
 
-  TODO
+```bash
+Download docker-compose from the [release page](https://docs.docker.com/compose/install/):
 
+```shell
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo chmod +x /usr/local/bin/docker-compose
+# create a new directory to store the configuration:
+$ mkdir shaarli && cd shaarli
+# Download the current version of Shaarli's docker-compose.yml
+$ curl -L https://raw.githubusercontent.com/shaarli/Shaarli/master/docker-compose.yml -o docker-compose.yml
+# Create the .env file and fill in your VPS and domain information
+# (replace <MY_SHAARLI_DOMAIN> and <MY_CONTACT_EMAIL> with your actual information)
+$ echo 'SHAARLI_VIRTUAL_HOST=shaarli.mydomain.org' > .env
+$ echo 'SHAARLI_LETSENCRYPT_EMAIL=admin@mydomain.org' >> .env
+# Pull the Docker images
+$ docker-compose pull
+# Run!
+$ docker-compose up -d
 ```
 
 
@@ -148,22 +183,29 @@ $ docker system prune
 
 ## References
 
-- [docker pull](https://docs.docker.com/engine/reference/commandline/pull/)
-- [docker images](https://docs.docker.com/engine/reference/commandline/images/)
-- [docker run](https://docs.docker.com/engine/reference/commandline/run/)
-- [docker ps](https://docs.docker.com/engine/reference/commandline/ps/)
-- [docker create](https://docs.docker.com/engine/reference/commandline/create/)
-- [docker exec](https://docs.docker.com/engine/reference/commandline/exec/)
-- [docker logs](https://docs.docker.com/engine/reference/commandline/logs/)
-- [Interactive Docker training portal](https://www.katacoda.com/courses/docker/) on [Katakoda](https://www.katacoda.com/)
-- [Where are Docker images stored?](http://blog.thoward37.me/articles/where-are-docker-images-stored/)
-- [Dockerfile reference](https://docs.docker.com/reference/builder/)
+- [Docker: using volumes](https://docs.docker.com/storage/volumes/)
 - [Dockerfile best practices](https://docs.docker.com/articles/dockerfile_best-practices/)
-- [Volumes](https://docs.docker.com/userguide/dockervolumes/)
+- [Dockerfile reference](https://docs.docker.com/reference/builder/)
+- [DockerHub: GitHub automated build](https://docs.docker.com/docker-hub/github/)
 - [DockerHub: Repositories](https://docs.docker.com/userguide/dockerrepos/)
 - [DockerHub: Teams and organizations](https://docs.docker.com/docker-hub/orgs/)
-- [DockerHub: GitHub automated build](https://docs.docker.com/docker-hub/github/)
-- [Service management: Using supervisord](https://docs.docker.com/articles/using_supervisord/)
+- [Get Docker CE for Debian](https://docs.docker.com/install/linux/docker-ce/debian/)
+- [Install Docker Compose](https://docs.docker.com/compose/install/)
+- [Interactive Docker training portal](https://www.katacoda.com/courses/docker/) on [Katakoda](https://www.katacoda.com/)
 - [Service management: Nginx in the foreground](http://nginx.org/en/docs/ngx_core_module.html#daemon)
-- [Docker: using volumes](https://docs.docker.com/storage/volumes/)
-
+- [Service management: Using supervisord](https://docs.docker.com/articles/using_supervisord/)
+- [Volumes](https://docs.docker.com/storage/volumes/)
+- [Volumes](https://docs.docker.com/userguide/dockervolumes/)
+- [Where are Docker images stored?](http://blog.thoward37.me/articles/where-are-docker-images-stored/)
+- [docker create](https://docs.docker.com/engine/reference/commandline/create/)
+- [Docker Documentation](https://docs.docker.com/)
+- [docker exec](https://docs.docker.com/engine/reference/commandline/exec/)
+- [docker images](https://docs.docker.com/engine/reference/commandline/images/)
+- [docker logs](https://docs.docker.com/engine/reference/commandline/logs/)
+- [docker logs](https://docs.docker.com/engine/reference/commandline/logs/)
+- [Docker Overview](https://docs.docker.com/engine/docker-overview/)
+- [docker ps](https://docs.docker.com/engine/reference/commandline/ps/)
+- [docker pull](https://docs.docker.com/engine/reference/commandline/pull/)
+- [docker run](https://docs.docker.com/engine/reference/commandline/run/)
+- [docker-compose logs](https://docs.docker.com/compose/reference/logs/)
+- Træfik: [Getting Started](https://docs.traefik.io/), [Docker backend](https://docs.traefik.io/configuration/backends/docker/), [Let's Encrypt](https://docs.traefik.io/user-guide/docker-and-lets-encrypt/), [Docker image](https://hub.docker.com/_/traefik/)

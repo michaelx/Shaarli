@@ -81,20 +81,87 @@ If you hosting provider only provides apache 2.2 and no support for `mod_version
 
 Follow the instructions in the error message. Make sure you are accessing shaarli via a direct IP address or a proper hostname. If you have **no dots** in the hostname (e.g. `localhost` or `http://my-webserver/shaarli/`), some browsers will not store cookies at all (this respects the [HTTP cookie specification](http://curl.haxx.se/rfc/cookie_spec.html)).
 
+----------------------------------------------------------
 
-### Upgrade: You must specify an integer as a key
+## Upgrades
+
+### You must specify an integer as a key
 
 In `v0.8.1` we changed how link keys are handled (from timestamps to incremental integers). Take a look at `data/updates.txt` content.
 
 
-#### Upgrade: `updates.txt` contains `updateMethodDatastoreIds`
+### `updates.txt` contains `updateMethodDatastoreIds`
 
 Try to delete it and refresh your page while being logged in.
 
-#### Upgrade: `updates.txt` doesn't exist or doesn't contain `updateMethodDatastoreIds`
+### `updates.txt` doesn't exist or doesn't contain `updateMethodDatastoreIds`
 
 1. Create `data/updates.txt` if it doesn't exist
 2. Paste this string in the update file `;updateMethodRenameDashTags;`
 3. Login to Shaarli
 4. Delete the update file
 5. Refresh
+
+
+
+--------------------------------------------------------
+
+## Import/export
+
+### Importing shaarli data to Firefox
+
+- In Firefox, open the bookmark manager (`Bookmarks menu > Show all bookmarks` or `Ctrl+Shift+B`), select `Import and Backup > Import bookmarks in HTML format`
+- Make sure the `Prepend note permalinks with this Shaarli instance's URL` box is checked when exporting, so that text-only/notes Shaares still point to the Shaarli instance you exported them from.
+- Depending on the number of bookmarks, the import can take some time.
+
+You may be interested in these Firefox addons to manage links imported from Shaarli
+
+- [Bookmark Deduplicator](https://addons.mozilla.org/en-US/firefox/addon/bookmark-deduplicator/) - provides an easy way to deduplicate your bookmarks
+- [TagSieve](https://addons.mozilla.org/en-US/firefox/addon/tagsieve/) - browse your bookmarks by their tags
+
+### Diigo
+
+If you export your bookmark from Diigo, make sure you use the Delicious export, not the Netscape export. (Their Netscape export is broken, and they don't seem to be interested in fixing it.)
+
+### Mister Wong
+
+See [this issue](https://github.com/sebsauvage/Shaarli/issues/146) for import tweaks.
+
+### SemanticScuttle
+
+To correctly import the tags from a [SemanticScuttle](http://semanticscuttle.sourceforge.net/) HTML export, edit the HTML file before importing and replace all occurences of `tags=` (lowercase) to `TAGS=` (uppercase).
+
+### Scuttle
+
+Shaarli cannot import data directly from [Scuttle](https://github.com/scronide/scuttle).
+
+However, you can use the third-party [scuttle-to-shaarli](https://github.com/q2apro/scuttle-to-shaarli)
+tool to export the Scuttle database to the Netscape HTML format compatible with the Shaarli importer.
+
+### Refind.com
+
+You can use the third-party tool [Derefind](https://github.com/ShawnPConroy/Derefind) to convert refind.com bookmark exports to a format that can be imported into Shaarli.
+
+
+-------------------------------------------------------
+
+## Other
+
+### The bookmarklet doesn't work
+
+Websites which enforce Content Security Policy (CSP), such as github.com, disallow usage of bookmarklets. Unfortunately, there is nothing Shaarli can do about it ([1](https://github.com/shaarli/Shaarli/issues/196), [2](https://bugzilla.mozilla.org/show_bug.cgi?id=866522), [3](https://code.google.com/p/chromium/issues/detail?id=233903).
+
+Under Opera, you can't drag'n drop the button: You have to right-click on it and add a bookmark to your personal toolbar.
+
+
+### Changing the timestamp for a shaare
+
+- Look for `<input type="hidden" name="lf_linkdate" value="{$link.linkdate}">` in `tpl/editlink.tpl` (line 14)
+- Replace `type="hidden"` with `type="text"` from this line
+- A new date/time field becomes available in the edit/new link dialog.
+- You can set the timestamp manually by entering it in the format `YYYMMDD_HHMMS`.
+
+
+### HTTP Referers
+
+Shaarli relies on `HTTP_REFERER` for some functions (like redirects and clicking on tags). If you have disabled or masqueraded `HTTP_REFERER` in your browser, some features of Shaarli may not work

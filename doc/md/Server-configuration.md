@@ -384,3 +384,8 @@ bantime = -1
 - [PHP 7 Changelog](http://php.net/ChangeLog-7.php)
 - [PHP 5 Changelog](http://php.net/ChangeLog-5.php)
 - [PHP: Bugs](https://bugs.php.net/)
+- [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security)
+- Hosting providers: [DigitalOcean](https://www.digitalocean.com/) ([1](https://www.digitalocean.com/docs/droplets/overview/), [2](https://www.digitalocean.com/pricing/), [3](https://www.digitalocean.com/docs/droplets/how-to/create/), [How to Add SSH Keys to Droplets](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/), [4](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-debian-8), [5](https://www.digitalocean.com/community/tutorials/an-introduction-to-securing-your-linux-vps)), [Gandi](https://www.gandi.net/en), [OVH](https://www.ovh.co.uk/), [RackSpace](https://www.rackspace.com/), etc.
+- Domain Names and [Registrars](https://en.wikipedia.org/wiki/Domain_name_registrar): [Introduction to the Domain Name System](https://opensource.com/article/17/4/introduction-domain-name-system-dns), [afraid.org free subdomains](https://freedns.afraid.org/), [OVH](https://www.ovh.co.uk/domains/), [Gandi](https://www.gandi.net/en/domain)
+
+
