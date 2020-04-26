@@ -8,12 +8,6 @@ To export links as an HTML file, under _Tools > Export_, choose:
 
 Restore by using the `Import` feature.
 
-- This can be done using the [shaarchiver](https://github.com/nodiscc/shaarchiver) tool.
-
-Example command: 
-```bash
-./export-bookmarks.py --url=https://my.server.com/shaarli --username=myusername --password=mysupersecretpassword --download-dir=./ --type=all
-```
 
 ## Import links from...
 
