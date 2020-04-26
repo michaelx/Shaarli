@@ -38,7 +38,7 @@ This is important in case plugins depend on each other. Read plugins READMEs for
 
 ## Configuration file
 
-Enabled plugins are stored in your `config.json.php` parameters file, under the `array`:
+Enabled plugins are stored in your [Configuration file](Shaarli-configuration), under the array:
 
 ```php
 $GLOBALS['config']['ENABLED_PLUGINS']
