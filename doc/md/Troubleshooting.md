@@ -24,6 +24,8 @@ Depending on its configuration and installed plugins, the browser may remove or 
 `localhost` is not a proper Fully Qualified Domain Name (FQDN); if Firefox has been set up to spoof referers, or only accept requests from the same base domain/host,
 Shaarli redirections will not work properly. To solve this, assign a local domain to your host, e.g. `localhost.lan` in your [hosts file](https://en.wikipedia.org/wiki/Hosts_(file)) and browse Shaarli at http://localhost.lan/.
 
+-----------------------------------------
+
 ## Hosting problems
 
 ### Old PHP versions

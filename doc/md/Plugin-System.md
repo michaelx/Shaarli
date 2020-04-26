@@ -1,18 +1,15 @@
-[**I am a developer: ** Developer API](#developer-api)
-
-[**I am a template designer: ** Guide for template designers](#guide-for-template-designer)
-
----
+# Plugin system
 
 ## Developer API
 
 ### What can I do with plugins?
 
-The plugin system let you:
+The plugin system lets you:
 
 - insert content into specific places across templates.
 - alter data before templates rendering.
 - alter data before saving new links.
+
 
 ### How can I create a plugin for Shaarli?
 
@@ -29,6 +26,7 @@ You should have the following tree view:
 |   |---| demo_plugin.php
 ```
 
+
 ### Plugin initialization
 
 At the beginning of Shaarli execution, all enabled plugins are loaded. At this point, the plugin system looks for an `init()` function to execute and run it if it exists. This function must be named this way, and takes the `ConfigManager` as parameter.
@@ -36,6 +34,7 @@ At the beginning of Shaarli execution, all enabled plugins are loaded. At this p
     <plugin_name>_init($conf)
 
 This function can be used to create initial data, load default settings, etc. But also to set *plugin errors*. If the initialization function returns an array of strings, they will be understand as errors, and displayed in the header to logged in users.
+
 
 ### Understanding hooks
 
@@ -58,6 +57,7 @@ For example, if my plugin want to add data to the header, this function is neede
 
 If this function is declared, and the plugin enabled, it will be called every time Shaarli is rendering the header.
 
+
 ### Plugin's data
 
 #### Parameters
@@ -67,6 +67,7 @@ Every hook function has a `$data` parameter. Its content differs for each hooks.
 **This parameter needs to be returned every time**, otherwise data is lost.
 
     return $data;
+
 
 #### Filling templates placeholder
 
@@ -83,6 +84,7 @@ array_push($data['top_placeholder'], 'My', 'content');
 
 return $data;
 ```
+
 
 #### Data manipulation
 
@@ -102,6 +104,7 @@ foreach ($data['links'] as &$value) {
 return $data;
 ```
 
+
 ### Metadata
 
 Every plugin needs a `<plugin_name>.meta` file, which is in fact an `.ini` file (`KEY="VALUE"`), to be listed in plugin administration.
@@ -114,11 +117,13 @@ Each file contain two keys:
 
 > Note: In PHP, `parse_ini_file()` seems to want strings to be between by quotes `"` in the ini file.
 
+
 ### It's not working!
 
 Use `demo_plugin` as a functional example. It covers most of the plugin system features.
 
 If it's still not working, please [open an issue](https://github.com/shaarli/Shaarli/issues/new).
+
 
 ### Hooks
 
@@ -140,12 +145,10 @@ If it's still not working, please [open an issue](https://github.com/shaarli/Sha
 | [save_plugin_parameters](#save_plugin_parameters) | Allow to manipulate plugin parameters before they're saved. |
 
 
-
 #### render_header
 
-Triggered on every page.
+Triggered on every page - allows plugins to add content in page headers.
 
-Allow plugin to add content in page headers.
 
 ##### Data
 
@@ -153,6 +156,7 @@ Allow plugin to add content in page headers.
 
 - `_PAGE_`: current target page (eg: `linklist`, `picwall`, etc.).
 - `_LOGGEDIN_`: true if user is logged in, false otherwise.
+
 
 ##### Template placeholders
 
@@ -170,18 +174,18 @@ List of placeholders:
 
 ![fields_toolbar_example](http://i.imgur.com/3GMifI2.png)
 
+
 #### render_includes
 
-Triggered on every page.
+Triggered on every page - allows plugins to include their own CSS files.
 
-Allow plugin to include their own CSS files.
-
-##### Data
+##### data
 
 `$data` is an array containing:
 
 - `_PAGE_`: current target page (eg: `linklist`, `picwall`, etc.).
 - `_LOGGEDIN_`: true if user is logged in, false otherwise.
+
 
 ##### Template placeholders
 
@@ -193,13 +197,14 @@ List of placeholders:
 
 > Note: only add the path of the CSS file. E.g: `plugins/demo_plugin/custom_demo.css`.
 
+
 #### render_footer
 
 Triggered on every page.
 
 Allow plugin to add content in page footer and include their own JS files.
 
-##### Data
+##### data
 
 `$data` is an array containing:
 
@@ -221,20 +226,21 @@ List of placeholders:
 
 > Note: only add the path of the JS file. E.g: `plugins/demo_plugin/custom_demo.js`.
 
+
 #### render_linklist
 
 Triggered when `linklist` is displayed (list of links, permalink, search, tag filtered, etc.).
 
 It allows to add content at the begining and end of the page, after every link displayed and to alter link data.
 
-##### Data
+##### data
 
 `$data` is an array containing:
 
 - `_LOGGEDIN_`: true if user is logged in, false otherwise.
 - All templates data, including links.
 
-##### Template placeholders
+##### template placeholders
 
 Items can be displayed in templates by adding an entry in `$data['<placeholder>']` array.
 
@@ -256,19 +262,20 @@ List of placeholders:
 
 ![plugin_end_zone_example](http://i.imgur.com/6IoRuop.png)
 
+
 #### render_editlink
 
 Triggered when the link edition form is displayed.
 
 Allow to add fields in the form, or display elements.
 
-##### Data
+##### data
 
 `$data` is an array containing:
 
 - All templates data.
 
-##### Template placeholders
+##### template placeholders
 
 Items can be displayed in templates by adding an entry in `$data['<placeholder>']` array.
 
@@ -278,19 +285,20 @@ List of placeholders:
 
 ![edit_link_plugin_example](http://i.imgur.com/5u17Ens.png)
 
+
 #### render_tools
 
 Triggered when the "tools" page is displayed.
 
 Allow to add content at the end of the page.
 
-##### Data
+##### data
 
 `$data` is an array containing:
 
 - All templates data.
 
-##### Template placeholders
+##### template placeholders
 
 Items can be displayed in templates by adding an entry in `$data['<placeholder>']` array.
 
@@ -300,20 +308,21 @@ List of placeholders:
 
 ![tools_plugin_example](http://i.imgur.com/Bqhu9oQ.png)
 
+
 #### render_picwall
 
 Triggered when picwall is displayed.
 
 Allow to add content at the top and bottom of the page.
 
-##### Data
+##### data
 
 `$data` is an array containing:
 
 - `_LOGGEDIN_`: true if user is logged in, false otherwise.
 - All templates data.
 
-##### Template placeholders
+##### template placeholders
 
 Items can be displayed in templates by adding an entry in `$data['<placeholder>']` array.
 
@@ -324,13 +333,14 @@ List of placeholders:
 
 ![plugin_start_end_zone_example](http://i.imgur.com/tVTQFER.png)
 
+
 #### render_tagcloud
 
 Triggered when tagcloud is displayed.
 
 Allow to add content at the top and bottom of the page.
 
-##### Data
+##### data
 
 `$data` is an array containing:
 
@@ -355,11 +365,9 @@ For each tag, the following placeholder can be used:
 
 #### render_taglist
 
-Triggered when taglist is displayed.
+Triggered when taglist is displayed - allows to add content at the top and bottom of the page.
 
-Allow to add content at the top and bottom of the page.
-
-##### Data
+##### data
 
 `$data` is an array containing:
 
@@ -385,7 +393,8 @@ Triggered when tagcloud is displayed.
 
 Allow to add content at the top and bottom of the page, the bottom of each link and to alter data.
 
-##### Data
+
+##### data
 
 `$data` is an array containing:
 
@@ -405,13 +414,14 @@ List of placeholders:
 - `plugin_start_zone`: before displaying the template content.
 - `plugin_end_zone`: after displaying the template content.
 
+
 #### render_feed
 
 Triggered when the ATOM or RSS feed is displayed.
 
 Allow to add tags in the feed, either in the header or for each items. Items (links) can also be altered before being rendered.
 
-##### Data
+##### data
 
 `$data` is an array containing:
 
@@ -431,13 +441,14 @@ For each links:
 
 - `feed_plugins`: additional tag for every link entry.
 
+
 #### save_link
 
 Triggered when a link is save (new link or edit).
 
 Allow to alter the link being saved in the datastore.
 
-##### Data
+##### data
 
 `$data` is an array containing the link being saved:
 
@@ -458,7 +469,7 @@ Triggered when a link is deleted.
 
 Allow to execute any action before the link is actually removed from the datastore
 
-##### Data
+##### data
 
 `$data` is an array containing the link being saved:
 
@@ -480,7 +491,7 @@ Triggered when the plugin parameters are saved from the plugin administration pa
 Plugins can perform an action every times their settings are updated.
 For example it is used to update the CSS file of the `default_colors` plugins.
 
-##### Data
+##### data
 
 `$data` input contains the `$_POST` array.
 
@@ -488,7 +499,7 @@ So if the plugin has a parameter called `MYPLUGIN_PARAMETER`,
 the array will contain an entry with `MYPLUGIN_PARAMETER` as a key.
 
 
-## Guide for template designer
+## Guide for template designers
 
 ### Plugin administration
 
