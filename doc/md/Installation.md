@@ -2,13 +2,9 @@
 
 ## Requirements
 
-**Hardware/Operating system:** Shaarli can be hosted on dedicated or shared servers. The smallest DigitalOcean VPS (Droplet with 1 CPU, 1 GiB RAM and 25 GiB SSD) costs about $5/month and will run any Shaarli installation without problems. Examples in this documentation are given for [Debian](https://www.debian.org/), a GNU/Linux distribution widely used in server environments. Please adapt them to your specific Linux distribution. You should have received instructions from your hosting provied on how to connect to the server using SSH (or FTP for shared hosts).
+**Hardware/Operating system:** Shaarli can be hosted on dedicated servers, or shared hosting. The smallest DigitalOcean VPS (Droplet with 1 CPU, 1 GiB RAM and 25 GiB SSD) costs about $5/month and will run any Shaarli installation without problems. Examples in this documentation are given for [Debian](https://www.debian.org/), a GNU/Linux distribution widely used in server environments. Please adapt them to your specific Linux distribution. You should have received instructions from your hosting provider on how to connect to the server using SSH (or FTP for shared hosts).
 
 **Network:** A domain name (DNS record) pointing to the server's public IP address is required to obtain a SSL/TLS certificate and setup HTTPS to secure client traffic to your Shaarli instance. Try to host the server in a region that is geographically close to your users.
-
-
-![](images/06-domain.jpg)
-
 
 ## From release ZIP
 
@@ -25,18 +21,18 @@ Please make sure your server is properly [configured](Server-configuration.md).
 
 ## From git sources
 
+These components are required to build Shaarli:
+
+- Install [Composer](Unit-tests.md#install_composer) to manage third-party [PHP dependencies](3rd-party-libraries.md#composer).
+- Install [yarn](https://yarnpkg.com/lang/en/docs/install/) to build the frontend dependencies.
+- Install [python3-virtualenv](https://pypi.python.org/pypi/virtualenv) to build the local HTML documentation.
+
 Clone the repository, either using:
 
 - any [tagged release](https://github.com/shaarli/Shaarli/releases)
 - `latest`: the latest [tagged release](https://github.com/shaarli/Shaarli/releases)
 - `master`: development branch
 
-How to proceed:
-
-- Clone the branch/tag of your choice using `git`, OR download and extract git ZIP files ([eg. for the master branch](https://github.com/shaarli/Shaarli/archive/master.zip))
-- Install [Composer](Unit-tests.md#install_composer) to manage third-party [PHP dependencies](3rd-party-libraries.md#composer).
-- Install [yarn](https://yarnpkg.com/lang/en/docs/install/) to build the frontend dependencies.
-- Install [python3-virtualenv](https://pypi.python.org/pypi/virtualenv) to build the local HTML documentation.
 
 ```bash
 # clone the branch/tag of your choice
@@ -70,7 +66,7 @@ Once Shaarli is downloaded and files have been placed at the correct location, o
 
 Setup your Shaarli installation, and it's ready to use! Congratulations! Your Shaarli is now available at `https://shaarli.mydomain.org`.
 
-![](guides/images/07-installation.jpg)
+![](images/07-installation.jpg)
 
 
 ## Upgrading Shaarli
