@@ -9,6 +9,12 @@ Once your Shaarli instance is installed, the file `data/config.json.php` is gene
 
 **Do not edit configuration options in index.php! Your changes would be lost.** 
 
+## Tools menu
+
+Some settings can be configured directly from a web browser by accesing the `Tools` menu. Values are read/written to/from the configuration file.
+
+![](images/tools.png)
+
 ## Configuration file example
 
 ```json
