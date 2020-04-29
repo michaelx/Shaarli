@@ -121,3 +121,42 @@ Here is the directory structure of Shaarli and the purpose of the different file
                      # This directory is automatically created. You can erase it anytime you want.
     vendor/          # Third-party dependencies. This directory is created by Composer
 ```
+
+## Automation
+
+A [`Makefile`](https://github.com/shaarli/Shaarli/blob/master/Makefile) is available to perform project-related operations:
+
+- [Static analysis](#Static-analysis) - check that the code is compliant to PHP conventions
+- [Unit tests](#Unit-tests) - ensure there are no regressions introduced by new commits
+- Documentation - generate a local HTML copy of the markdown documentation
+
+### Continuous Integration
+
+[Travis CI](http://docs.travis-ci.com/) is a Continuous Integration build server, that runs a build:
+
+- each time a commit is merged to the mainline (`master` branch)
+- each time a Pull Request is submitted or updated
+
+After all jobs have finished, Travis returns the results to GitHub:
+
+- a status icon represents the result for the `master` branch: [![](https://api.travis-ci.org/shaarli/Shaarli.svg)](https://travis-ci.org/shaarli/Shaarli)
+- Pull Requests are updated with the Travis build result.
+
+See [`.travis.yml`](https://github.com/shaarli/Shaarli/blob/master/.travis.yml).
+
+
+### Documentation
+
+[mkdocs](https://www.mkdocs.org/) is used to convert markdown documentation to HTML pages. The [public documentation](https://shaarli.readthedocs.io/en/master/) website is rendered and hosted by [readthedocs.org](https://readthedocs.org/). A copy of the documentation is also included in prebuilt [release archives](https://github.com/shaarli/Shaarli/releases) (`doc/html/` path in your Shaarli installation). To generate the HTML documentation locally, install a recent version of Python `setuptools` and run    `make doc`.
+
+
+## Static analysis
+
+**Work in progress:** Static analysis is currently being discussed here: in [#95 - Fix coding style (static analysis)](https://github.com/shaarli/Shaarli/issues/95), [#130 - Continuous Integration tools & features](https://github.com/shaarli/Shaarli/issues/130)
+
+Static analysis tools can be installed with Composer, and used through Shaarli's [Makefile](https://github.com/shaarli/Shaarli/blob/master/Makefile).
+
+For an overview of the available features, see:
+
+- [Code quality: Makefile to run static code checkers](https://github.com/shaarli/Shaarli/pull/124) (#124)
+- [Run PHPCS against different coding standards](https://github.com/shaarli/Shaarli/pull/276) (#276)
