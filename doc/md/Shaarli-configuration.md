@@ -3,7 +3,7 @@
 Once your Shaarli instance is installed, the file `data/config.json.php` is generated:
 
 - it contains all settings in JSON format, and can be edited to customize values
-- it defines which [plugins](Plugin-System) are enabled
+- it defines which [plugins](Plugin) are enabled
 - its values override those defined in `index.php`
 - it is wrapped in a PHP comment so that its contents are never served by the web server, regardless of configuration
 

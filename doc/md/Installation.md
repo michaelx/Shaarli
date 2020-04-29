@@ -2,7 +2,7 @@
 
 ## Requirements
 
-**Hardware/Operating system:** Shaarli can be hosted on dedicated servers, or shared hosting. The smallest DigitalOcean VPS (Droplet with 1 CPU, 1 GiB RAM and 25 GiB SSD) costs about $5/month and will run any Shaarli installation without problems. Examples in this documentation are given for [Debian](https://www.debian.org/), a GNU/Linux distribution widely used in server environments. Please adapt them to your specific Linux distribution. You should have received instructions from your hosting provider on how to connect to the server using SSH (or FTP for shared hosts).
+**Platform/Operating system:** Shaarli can be hosted on dedicated/virtual servers, or shared hosting. The smallest DigitalOcean VPS (Droplet with 1 CPU, 1 GiB RAM and 25 GiB SSD) costs about $5/month and will run any Shaarli installation without problems. Examples in this documentation are given for [Debian](https://www.debian.org/), a GNU/Linux distribution widely used in server environments. Please adapt them to your specific Linux distribution. You should have received instructions from your hosting provider on how to connect to the server using SSH (or FTP for shared hosts).
 
 **Network:** A domain name (DNS record) pointing to the server's public IP address is required to obtain a SSL/TLS certificate and setup HTTPS to secure client traffic to your Shaarli instance. Try to host the server in a region that is geographically close to your users.
 
@@ -54,19 +54,23 @@ $ mv /path/to/shaarli /var/www/shaarli.mydomain.org
 
 Also, please make sure your server is properly [configured](Server-configuration.md).
 
+
 ## Using Docker
 
 [See the documentation](Docker.md)
-
 
 
 ## Finish Installation
 
 Once Shaarli is downloaded and files have been placed at the correct location, open this location your web browser.
 
-Setup your Shaarli installation, and it's ready to use! Congratulations! Your Shaarli is now available at `https://shaarli.mydomain.org`.
+Enter basic settings for your Shaarli installation, and it's ready to use!
 
 ![](images/07-installation.jpg)
+
+Congratulations! Your Shaarli is now available at `https://shaarli.mydomain.org`.
+
+You can further [configure Shaarli](Shaarli-configuration.md), setup [Plugins](Plugins.md) or [additional software](Community-&-Related-software.md).
 
 
 ## Upgrading Shaarli
