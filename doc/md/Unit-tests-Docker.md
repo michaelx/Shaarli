@@ -3,8 +3,6 @@
 Read first:
 
 - [Docker](Docker.md)
-- [Docker resources](docker/resources.md)
-- [Unit tests](Unit-tests.md)
 
 ### Docker test images
 

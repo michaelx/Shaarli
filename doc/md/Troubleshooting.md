@@ -13,11 +13,16 @@ Login form is protected against brute force attacks: 4 failed logins will ban th
 - To remove the current IP bans, delete the file `data/ipbans.php`
 - To list all login attempts, see `data/log.txt` (succesful/failed logins, bans/lifted bans)
 
+--------------------------------------
+
 ## Browser issues
 
 ### Redirection issues (HTTP Referer)
 
-Depending on its configuration and installed plugins, the browser may remove or alter (spoof) [HTTP referers](https://en.wikipedia.org/wiki/HTTP_referer), thus preventing Shaarli from properly redirecting between pages. Referer settings are available by browsing `about:config` and are documented [here](https://wiki.mozilla.org/Security/Referrer). `network.http.referer.spoofSource = true` in particular is known to break some functionality in Shaarli.
+Shaarli relies on `HTTP_REFERER` for some functions (like redirects and clicking on tags). If you have disabled or altered/spoofed [HTTP referers](https://en.wikipedia.org/wiki/HTTP_referer) in your browser, some features of Shaarli may not work as expected (depending on configuration and installed plugins), notably redirections between pages.
+
+Firefox Referer settings are available by browsing `about:config` and are documented [here](https://wiki.mozilla.org/Security/Referrer). `network.http.referer.spoofSource = true` in particular is known to break some functionality in Shaarli.
+
 
 ### Firefox, localhost and redirections
 
@@ -164,6 +169,3 @@ Under Opera, you can't drag'n drop the button: You have to right-click on it and
 - You can set the timestamp manually by entering it in the format `YYYMMDD_HHMMS`.
 
 
-### HTTP Referers
-
-Shaarli relies on `HTTP_REFERER` for some functions (like redirects and clicking on tags). If you have disabled or masqueraded `HTTP_REFERER` in your browser, some features of Shaarli may not work
