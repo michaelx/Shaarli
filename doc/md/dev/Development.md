@@ -26,12 +26,16 @@ Javascript:
 - [bLazy](http://dinbror.dk/blazy/) ([GitHub](https://github.com/dinbror/blazy)) - lazy loading for thumbnails
 - [qr.js](http://neocotic.com/qr.js/) ([GitHub](https://github.com/neocotic/qr.js)) - QR code generation
 
-PHP:
+PHP (managed through [`composer.json`](https://github.com/shaarli/Shaarli/blob/master/composer.json)):
 
 - [RainTPL](https://github.com/rainphp/raintpl) - HTML templating for PHP
-[`shaarli/netscape-bookmark-parser`](https://packagist.org/packages/shaarli/netscape-bookmark-parser) - Import bookmarks from Netscape files
-[`erusev/parsedown`](https://packagist.org/packages/erusev/parsedown) - Parse MarkDown syntax for the MarkDown plugin
-[`slim/slim`](https://packagist.org/packages/slim/slim) - Handle routes and middleware for the REST API
+- [`shaarli/netscape-bookmark-parser`](https://packagist.org/packages/shaarli/netscape-bookmark-parser) - Import bookmarks from Netscape files
+- [`erusev/parsedown`](https://packagist.org/packages/erusev/parsedown) - Parse MarkDown syntax for the MarkDown plugin
+- [`slim/slim`](https://packagist.org/packages/slim/slim) - Handle routes and middleware for the REST API
+- [`ArthurHoaro/web-thumbnailer`](https://github.com/ArthurHoaro/web-thumbnailer) - PHP library which will retrieve a thumbnail for any given URL
+- [`pubsubhubbub/publisher`](https://github.com/pubsubhubbub/php-publisher) - A PubSubHubbub publisher module for PHP.
+- [`gettext/gettext`](https://github.com/php-gettext/Gettext) - PHP library to collect and manipulate gettext (.po, .mo, .php, .json, etc)
+
 
 ## Security
 
