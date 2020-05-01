@@ -23,7 +23,7 @@ Please make sure your server is properly [configured](Server-configuration.md).
 
 These components are required to build Shaarli:
 
-- Install [Composer](Unit-tests.md#install_composer) to manage third-party [PHP dependencies](3rd-party-libraries.md#composer).
+- Install [Composer](Unit-tests.md#install_composer) to manage third-party [PHP dependencies](Development#third-party-libraries).
 - Install [yarn](https://yarnpkg.com/lang/en/docs/install/) to build the frontend dependencies.
 - Install [python3-virtualenv](https://pypi.python.org/pypi/virtualenv) to build the local HTML documentation.
 
