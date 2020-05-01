@@ -64,6 +64,8 @@ Shaarli can be used:
 - Dead-simple installation: drop the files, open the page
 - Links are stored in a file (no database required, easy backup: simply copy the datastore file)
 - Import and export links as Netscape bookmarks compatible with most Web browsers
+- Customizable from [configuration](Shaarli-configuration) dialog/file and third-party [plugins and themes](Community-&-related-software)
+
 
 ### Accessibility
 
@@ -72,13 +74,27 @@ Shaarli can be used:
 - Degrades gracefully with Javascript disabled
 - Easy page customization through HTML/CSS/RainTPL
 
+
+### Fast
+
+- Small datastore file, write-once/read-many, served most of the time from OS disk caches (no disk I/O)
+- Stays fast with even tens of thousands shaares!
+
+
 ### Security
 
 - Discreet pop-up notification when a new release is available
-- Bruteforce protection on the login form
+- Bruteforce protection on the login form, compatible with [fail2ban](Server-configuration#fail2ban)
 - Protected against [XSRF](http://en.wikipedia.org/wiki/Cross-site_request_forgery) and session cookie hijacking
 
-<!-- TODO Limitations -->
+
+### Self-hosted
+
+- Shaarli is an alternative to commercial services such as StumbleUpon, Delicio.us, Diigo...
+- Shaarli does not send any telemetry/metrics/private information to developers
+- The data is yours, [import and export](Usage#import-export) it to/from a variety of formats
+- Shaarli is Free and Open-Source software, inspect and change how the program works in the [source code](https://github.com/shaarli/Shaarli)
+
 
 ### REST API
 
@@ -100,15 +116,9 @@ Shaarli can be used:
 
 This friendly fork is maintained by the Shaarli community at <https://github.com/shaarli/Shaarli>
 
-This is a community fork of the original [Shaarli](https://github.com/sebsauvage/Shaarli/) project by [Sébastien Sauvage](http://sebsauvage.net/).
+This is a community fork of the original [Shaarli](https://github.com/sebsauvage/Shaarli/) project by [Sébastien Sauvage](http://sebsauvage.net/) which is now (unmaintained)(https://github.com/sebsauvage/Shaarli/issues/191). The original Shaarli instance is still available [here](https://sebsauvage.net/links/) (+25000 shaares!)
 
-The original project is currently unmaintained, and the developer [has informed us](https://github.com/sebsauvage/Shaarli/issues/191) that he would have no time to work on Shaarli in the near future.
-
-The Shaarli community has carried on the work to provide [many
-patches](https://github.com/shaarli/Shaarli/compare/sebsauvage:master...master) for
-[bug fixes and enhancements](https://github.com/shaarli/Shaarli/issues?q=is%3Aclosed+)
-in this repository, and will keep maintaining the project for the foreseeable
-future, while keeping Shaarli simple and efficient.
+The Shaarli community has carried on the work to provide [many patches](https://github.com/shaarli/Shaarli/compare/sebsauvage:master...master) for [bug fixes and enhancements](https://github.com/shaarli/Shaarli/issues?q=is%3Aclosed+) in this repository, and will keep maintaining the project for the foreseeable future, while keeping Shaarli simple and efficient.
 
 
 ### Contributing and getting help

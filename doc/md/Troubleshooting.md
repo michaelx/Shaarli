@@ -1,5 +1,8 @@
 # Troubleshooting
 
+First of all, ensure that both the [web server](Server-configuration) and [Shaarli](Shaarli-configuration) are correctly configured.
+
+
 ## Login
 
 ### I forgot my password!
@@ -169,3 +172,16 @@ Under Opera, you can't drag'n drop the button: You have to right-click on it and
 - You can set the timestamp manually by entering it in the format `YYYMMDD_HHMMS`.
 
 
+-------------------------------------------------------
+
+## Support
+
+If the solutions above did not help, please:
+
+- Come and ask question on the [Gitter chat](https://gitter.im/shaarli/Shaarli)
+- Search for [issues](https://github.com/shaarli/Shaarli/issues) and [Pull Requests](https://github.com/shaarli/Shaarli/pulls)
+    - if you find one that is related to the issue, feel free to comment and provide additional details (host/Shaarli setup...)
+    - else, [open a new issue](https://github.com/shaarli/Shaarli/issues/new), and provide information about the problem:
+        - _what happens?_ - display glitches, invalid data, security flaws...
+        - _what is your configuration?_  - OS, server version, activated extensions, web browser...
+        - _is it reproducible?_
