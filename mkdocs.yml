@@ -29,16 +29,10 @@ pages:
 - Development:
     - Development: dev/Development.md
     - Versioning: dev/Versioning.md
-    - Continuous integration tools: Continuous-integration-tools.md
-    - GnuPG signature: GnuPG-signature.md
-    - Directory structure: Directory-structure.md
-    - Link Structure: Link-structure.md
-    - 3rd party libraries: 3rd-party-libraries.md
+    - GnuPG signature: dev/GnuPG-signature.md
     - Plugin System: Plugin-System.md
-    - Release Shaarli: Release-Shaarli.md
-    - Security: Security.md
-    - Static analysis: Static-analysis.md
     - Translations: Translations.md
+    - Release Shaarli: Release-Shaarli.md
     - Theming: Theming.md
     - Unit tests: Unit-tests.md
     - Unit tests inside Docker: Unit-tests-Docker.md
