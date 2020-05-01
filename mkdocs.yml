@@ -33,8 +33,7 @@ pages:
     - GnuPG signature: dev/GnuPG-signature.md
     - Plugin System: dev/Plugin-system.md
     - Translations: dev/Translations.md
-    - Release Shaarli: de/Release-Shaarli.md
-    - Theming: Theming.md
-    - Unit tests: Unit-tests.md
-    - Unit tests inside Docker: Unit-tests-Docker.md
+    - Release Shaarli: dev/Release-Shaarli.md
+    - Theming: dev/Theming.md
+    - Unit tests: dev/Unit-tests.md
 - Troubleshooting: Troubleshooting.md
