@@ -23,17 +23,12 @@ pages:
     - Shaarli configuration: Shaarli-configuration.md
     - Plugins: Plugins.md
 - Usage:
-    - Browsing and searching: Browsing-and-searching.md
-    - Sharing content: Sharing-content.md
-    - RSS feeds: RSS-feeds.md
+    - Usage: Usage.md
     - REST API: REST-API.md
     - Community & Related software: Community-&-Related-software.md
-- Guides:
-    - Install Shaarli on Debian 9 with Docker: guides/install-shaarli-with-debian9-and-docker.md
-    - Import and export: guides/import-export.md
-    - Various hacks: guides/various-hacks.md
 - Development:
-    - Development guidelines: Development-guidelines.md
+    - Development: dev/Development.md
+    - Versioning: dev/Versioning.md
     - Continuous integration tools: Continuous-integration-tools.md
     - GnuPG signature: GnuPG-signature.md
     - Directory structure: Directory-structure.md
@@ -41,7 +36,6 @@ pages:
     - 3rd party libraries: 3rd-party-libraries.md
     - Plugin System: Plugin-System.md
     - Release Shaarli: Release-Shaarli.md
-    - Versioning and Branches: Versioning-and-Branches.md
     - Security: Security.md
     - Static analysis: Static-analysis.md
     - Translations: Translations.md
