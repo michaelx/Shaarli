@@ -116,7 +116,7 @@ Shaarli can be used:
 
 This friendly fork is maintained by the Shaarli community at <https://github.com/shaarli/Shaarli>
 
-This is a community fork of the original [Shaarli](https://github.com/sebsauvage/Shaarli/) project by [Sébastien Sauvage](http://sebsauvage.net/) which is now (unmaintained)(https://github.com/sebsauvage/Shaarli/issues/191). The original Shaarli instance is still available [here](https://sebsauvage.net/links/) (+25000 shaares!)
+This is a community fork of the original [Shaarli](https://github.com/sebsauvage/Shaarli/) project by [Sébastien Sauvage](http://sebsauvage.net/) which is now [unmaintained](https://github.com/sebsauvage/Shaarli/issues/191). The original Shaarli instance is still available [here](https://sebsauvage.net/links/) (+25000 shaares!)
 
 The Shaarli community has carried on the work to provide [many patches](https://github.com/shaarli/Shaarli/compare/sebsauvage:master...master) for [bug fixes and enhancements](https://github.com/shaarli/Shaarli/issues?q=is%3Aclosed+) in this repository, and will keep maintaining the project for the foreseeable future, while keeping Shaarli simple and efficient.
 
