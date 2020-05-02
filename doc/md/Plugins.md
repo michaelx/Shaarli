@@ -62,16 +62,16 @@ $GLOBALS['config']['ENABLED_PLUGINS'] = array(
 
 Usage of each plugin is documented in it's README file:
 
- * `addlink-toolbar`: Adds the addlink input on the linklist page
- * `archiveorg`: For each link, add an Archive.org icon
+ * `addlink-toolbar`: Adds the addlink input on the Shaares list page
+ * `archiveorg`: For each Shaare, add a link to the archived page on Archive.org
  * `default_colors`: Override default theme colors.
  * `isso`: Let visitor comment your shaares on permalinks with Isso.
  * [`markdown`](https://github.com/shaarli/Shaarli/blob/master/plugins/markdown/README.md): Render shaare description with Markdown syntax.
  * `piwik`: A plugin that adds Piwik tracking code to Shaarli pages.
  * [`playvideos`](https://github.com/shaarli/Shaarli/blob/master/plugins/playvideos/README.md): Add a button in the toolbar allowing to watch all videos.
  * `pubsubhubbub`: Enable PubSubHubbub feed publishing
- * `qrcode`: For each link, add a QRCode icon.
- * [`wallabag`](https://github.com/shaarli/Shaarli/blob/master/plugins/wallabag/README.md):  For each link, add a Wallabag icon to save it in your instance.
+ * `qrcode`: For each Shaare, add a QRCode icon.
+ * [`wallabag`](https://github.com/shaarli/Shaarli/blob/master/plugins/wallabag/README.md):  For each Shaare, add a Wallabag icon to save it in your instance.
 
 
 ### Third party plugins

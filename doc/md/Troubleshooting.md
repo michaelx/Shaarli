@@ -11,7 +11,7 @@ Delete the file `data/config.json.php` and display the page again. You will be a
 
 ### I'm locked out - Login bruteforce protection
 
-Login form is protected against brute force attacks: 4 failed logins will ban the IP address from login for 30 minutes. Banned IPs can still browse links.
+Login form is protected against brute force attacks: 4 failed logins will ban the IP address from login for 30 minutes. Banned IPs can still browse Shaares.
 
 - To remove the current IP bans, delete the file `data/ipbans.php`
 - To list all login attempts, see `data/log.txt` (succesful/failed logins, bans/lifted bans)
@@ -97,7 +97,7 @@ Follow the instructions in the error message. Make sure you are accessing shaarl
 
 ### You must specify an integer as a key
 
-In `v0.8.1` we changed how link keys are handled (from timestamps to incremental integers). Take a look at `data/updates.txt` content.
+In `v0.8.1` we changed how Shaare keys are handled (from timestamps to incremental integers). Take a look at `data/updates.txt` content.
 
 
 ### `updates.txt` contains `updateMethodDatastoreIds`
@@ -124,7 +124,7 @@ Try to delete it and refresh your page while being logged in.
 - Make sure the `Prepend note permalinks with this Shaarli instance's URL` box is checked when exporting, so that text-only/notes Shaares still point to the Shaarli instance you exported them from.
 - Depending on the number of bookmarks, the import can take some time.
 
-You may be interested in these Firefox addons to manage links imported from Shaarli
+You may be interested in these Firefox addons to manage bookmarks imported from Shaarli
 
 - [Bookmark Deduplicator](https://addons.mozilla.org/en-US/firefox/addon/bookmark-deduplicator/) - provides an easy way to deduplicate your bookmarks
 - [TagSieve](https://addons.mozilla.org/en-US/firefox/addon/tagsieve/) - browse your bookmarks by their tags
@@ -168,7 +168,7 @@ Under Opera, you can't drag'n drop the button: You have to right-click on it and
 
 - Look for `<input type="hidden" name="lf_linkdate" value="{$link.linkdate}">` in `tpl/editlink.tpl` (line 14)
 - Replace `type="hidden"` with `type="text"` from this line
-- A new date/time field becomes available in the edit/new link dialog.
+- A new date/time field becomes available in the edit/new Shaare dialog.
 - You can set the timestamp manually by entering it in the format `YYYMMDD_HHMMS`.
 
 

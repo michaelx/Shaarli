@@ -134,12 +134,11 @@ _These settings should not be edited_
 
 - **title**: Shaarli's instance title.  
 - **header_link**: Link to the homepage.  
-- **links_per_page**: Number of shaares displayed per page.  
+- **links_per_page**: Number of Shaares displayed per page.  
 - **timezone**: See [the list of supported timezones](http://php.net/manual/en/timezones.php).  
 - **enabled_plugins**: List of enabled plugins.
 - **default_note_title**: Default title of a new note.
-- **retrieve_description** (boolean): If set to true, for every new links Shaarli will try
-to retrieve the description and keywords from the HTML meta tags.
+- **retrieve_description** (boolean): If set to true, for every new Shaare Shaarli will try to retrieve the description and keywords from the HTML meta tags.
 
 ### Security
 
@@ -147,14 +146,14 @@ to retrieve the description and keywords from the HTML meta tags.
   It might be useful if your IP adress often changes.  
 - **ban_after**: Failed login attempts before being IP banned.  
 - **ban_duration**: IP ban duration in seconds.  
-- **open_shaarli**: Anyone can add a new link while logged out if enabled.  
+- **open_shaarli**: Anyone can add a new Shaare while logged out if enabled.  
 - **trusted_proxies**: List of trusted IP which won't be banned after failed login attemps. Useful if Shaarli is behind a reverse proxy.  
 - **allowed_protocols**: List of allowed protocols in shaare URLs or markdown-rendered descriptions. Useful if you want to store `javascript:` links (bookmarklets) in Shaarli (default: `["ftp", "ftps", "magnet"]`).
 
 ### Resources
 
 - **data_dir**: Data directory.  
-- **datastore**: Shaarli's links database file path.  
+- **datastore**: Shaarli's Shaares database file path.  
 - **history**: Shaarli's operation history file path.
 - **updates**: File path for the ran updates file.  
 - **log**: Log file path.  
@@ -187,8 +186,8 @@ Must be an associative array: `translation domain => translation path`.
 
 ### Privacy
 
-- **default_private_links**: Check the private checkbox by default for every new link.  
-- **hide_public_links**: All links are hidden while logged out.  
+- **default_private_links**: Check the private checkbox by default for every new Shaare.  
+- **hide_public_links**: All Shaares are hidden while logged out.  
 - **force_login**: if **hide_public_links** and this are set to `true`, all anonymous users are redirected to the login page.
 - **hide_timestamps**: Timestamps are hidden.
 - **remember_user_default**: Default state of the login page's *remember me* checkbox

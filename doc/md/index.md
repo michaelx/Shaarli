@@ -6,7 +6,7 @@ Do you want to share the links you discover?
 Shaarli is a minimalist bookmark manager and link sharing service that you can install on your own server.
 It is designed to be personal (single-user), fast and handy.
 
-<!-- TODO screenshots -->
+[![](https://i.imgur.com/8wEBRSG.png)](https://i.imgur.com/WWPfSj0.png) [![](https://i.imgur.com/rrsjWYy.png)](https://i.imgur.com/TZzGHMs.png) [![](https://i.imgur.com/uICDOle.png)](https://i.imgur.com/27wYsbC.png) [![](https://i.imgur.com/KNvFGVB.png)](https://i.imgur.com/0f5faqw.png) [![](https://i.imgur.com/tVvD3gH.png)](https://i.imgur.com/zGF4d6L.jpg) [![](https://i.imgur.com/8iRzHfe.png)](https://i.imgur.com/sfJJ6NT.png) [![](https://i.imgur.com/GjZGvIh.png)](https://i.imgur.com/QsedIuJ.png) [![](https://i.imgur.com/TFZ9PEq.png)](https://i.imgur.com/KdtF8Ll.png) [![](https://i.imgur.com/IvlqXXK.png)](https://i.imgur.com/boaaibC.png) [![](https://i.imgur.com/nlETouG.png)](https://i.imgur.com/Ib9O7n3.png)
 
 Visit the pages in the sidebar to find information on how to setup, use, configure, tweak and troubleshoot Shaarli.
 
@@ -29,29 +29,25 @@ Login: `demo`; Password: `demo`
 
 Shaarli can be used:
 
-- to share, comment and save interesting links and news
+- to share, comment and save interesting links
 - to bookmark useful/frequent links and share them between computers
 - as a minimal blog/microblog/writing platform
-- as a read-it-later list
-- to draft and save articles/posts/ideas
-- to keep notes, documentation and code snippets
-- as a shared clipboard/notepad/pastebin between machines
-- as a todo list
-- to store media playlists
-- to keep extracts/comments from webpages that may disappear.
-- to keep track of ongoing discussions
-- to feed other blogs, aggregators, social networks... using RSS feeds
+- as a read-it-later/todo list
+- as a notepad to draft and save articles/posts/ideas
+- as a knowledge base to keep notes, documentation and code snippets
+- as a shared clipboard/notepad/pastebin between computers
+- as playlist manager for online media
+- to feed other blogs, aggregators, social networks...
 
 ### Edit, view and search your links
 
-- Minimalist design
-- FAST
-- Customizable link titles and descriptions
-- Tags to organize your links (features tag autocompletion, renaming, merging and deletion)
-- Search by tag or using the full-text search
-- Public and private links (visible only to logged-in users)
+- Minimalist, fast
+- Editable URL, title, description, tags, private/public status for all your [Shaares](Usage.md)
+- [Tags](Usage.md#tags) to organize your Shaares
+- [Search](Usage.md#search) in all fields
+- Public and private Shaares (visible only to logged-in users)
 - Unique permalinks for easy reference
-- Paginated link list (with image and video thumbnails)
+- Paginated Shaares list (with image and video thumbnails)
 - Tag cloud and list views
 - Picture wall: image and video thumbnails view (with lazy loading)
 - ATOM and RSS feeds (can also be filtered using tags or text search)
@@ -62,8 +58,8 @@ Shaarli can be used:
 ### Easy setup
 
 - Dead-simple installation: drop the files, open the page
-- Links are stored in a file (no database required, easy backup: simply copy the datastore file)
-- Import and export links as Netscape bookmarks compatible with most Web browsers
+- Shaares are stored in a file (no database required, easy backup: simply copy the datastore file)
+- Import and export Shaares as Netscape bookmarks compatible with most Web browsers
 - Customizable from [configuration](Shaarli-configuration) dialog/file and third-party [plugins and themes](Community-&-related-software)
 
 
@@ -99,14 +95,6 @@ Shaarli can be used:
 ### REST API
 
 - Easily extensible by any client using the REST API exposed by Shaarli ([API documentation](http://shaarli.github.io/api-documentation/)).
-
-
-
-## Screenshots
-
-[![](https://i.imgur.com/8wEBRSG.png)](https://i.imgur.com/WWPfSj0.png) [![](https://i.imgur.com/rrsjWYy.png)](https://i.imgur.com/TZzGHMs.png) [![](https://i.imgur.com/uICDOle.png)](https://i.imgur.com/27wYsbC.png) [![](https://i.imgur.com/KNvFGVB.png)](https://i.imgur.com/0f5faqw.png) [![](https://i.imgur.com/tVvD3gH.png)](https://i.imgur.com/zGF4d6L.jpg) [![](https://i.imgur.com/8iRzHfe.png)](https://i.imgur.com/sfJJ6NT.png) [![](https://i.imgur.com/GjZGvIh.png)](https://i.imgur.com/QsedIuJ.png) [![](https://i.imgur.com/TFZ9PEq.png)](https://i.imgur.com/KdtF8Ll.png) [![](https://i.imgur.com/IvlqXXK.png)](https://i.imgur.com/boaaibC.png) [![](https://i.imgur.com/nlETouG.png)](https://i.imgur.com/Ib9O7n3.png)
-
-
 
 
 
