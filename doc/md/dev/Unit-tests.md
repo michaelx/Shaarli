@@ -29,19 +29,17 @@ $ composer update
 
 ## Install and enable Xdebug to generate PHPUnit coverage reports
 
-See http://xdebug.org/docs/install
 
-For Debian-based distros:
-```bash
-$ aptitude install php5-xdebug
-```
-For ArchLinux:
-```bash
-$ pacman -S xdebug
-```
+[Xdebug](http://xdebug.org/docs/install) is a PHP extension which provides debugging and profiling capabilities. Install Xdebug:
 
-Then add the following line to `/etc/php/php.ini`:
-```ini
+```bash
+# for Debian-based distros:
+sudo aptitude install php5-xdebug
+
+# for ArchLinux:
+pacman -S xdebug
+
+# then add the following line to /etc/php/php.ini
 zend_extension=xdebug.so
 ```
 
@@ -54,6 +52,7 @@ make test
 # ...
 # OK (36 tests, 65 assertions)
 ```
+
 In case of failure the test suite will point you to actual errors and output a summary:
 
 ```bash
@@ -102,7 +101,7 @@ $ vendor/bin/phpunit --group WIP tests/
 
 ## Running tests inside Docker containers
 
-Unit tests can be run inside [Docker](Docker.md) containers.
+Unit tests can be run inside [Docker](../Docker.md) containers.
 
 Test Dockerfiles are located under `tests/docker/<distribution>/Dockerfile`, and can be used to build Docker images to run Shaarli test suites under commonLinux environments. Dockerfiles are provided for the following environments:
 

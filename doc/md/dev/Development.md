@@ -5,9 +5,6 @@ Please read [Contributing to Shaarli](https://github.com/shaarli/Shaarli/tree/ma
 ## Guidelines
 
 
-- [Static analysis](#static-analysis) - patches should try to stick to the [PHP Standard Recommendations](http://www.php-fig.org/psr/) (PSR), especially:
-    - [PSR-1](http://www.php-fig.org/psr/psr-1/) - Basic Coding Standard
-    - [PSR-2](http://www.php-fig.org/psr/psr-2/) - Coding Style Guide
 - [Unit tests](Unit-tests)
 - Javascript linting - Shaarli uses [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript). 
 Run `make eslint` to check JS style.
@@ -155,6 +152,13 @@ See [`.travis.yml`](https://github.com/shaarli/Shaarli/blob/master/.travis.yml).
 
 
 ## Static analysis
+
+
+Patches should try to stick to the [PHP Standard Recommendations](http://www.php-fig.org/psr/) (PSR), especially:
+
+- [PSR-1](http://www.php-fig.org/psr/psr-1/) - Basic Coding Standard
+- [PSR-2](http://www.php-fig.org/psr/psr-2/) - Coding Style Guide
+
 
 **Work in progress:** Static analysis is currently being discussed here: in [#95 - Fix coding style (static analysis)](https://github.com/shaarli/Shaarli/issues/95), [#130 - Continuous Integration tools & features](https://github.com/shaarli/Shaarli/issues/130)
 
