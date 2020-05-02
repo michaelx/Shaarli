@@ -1,4 +1,4 @@
-## Reverse proxy
+# Reverse proxy
 
 If Shaarli is hosted on a server behind a [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) (i.e. there is a proxy server between clients and the web server hosting Shaarli), configure it accordingly. See [Reverse proxy](Reverse-proxy.md) configuration. In this example:
 
@@ -12,7 +12,7 @@ In your [Shaarli configuration](Shaarli-configuration) `data/config.json.php`, a
 See also [proxy-related](https://github.com/shaarli/Shaarli/issues?utf8=%E2%9C%93&q=label%3Aproxy+) issues.
 
 
-### Apache
+## Apache
 
 ```apache
 <VirtualHost *:80>
@@ -46,7 +46,7 @@ See also [proxy-related](https://github.com/shaarli/Shaarli/issues?utf8=%E2%9C%9
 ```
 
 
-### HAProxy
+## HAProxy
 
 
 ```conf
@@ -71,7 +71,7 @@ backend shaarli
 ```
 
 
-### Nginx
+## Nginx
 
 
 ```nginx

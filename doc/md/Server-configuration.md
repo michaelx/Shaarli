@@ -1,3 +1,5 @@
+# Server configuration
+
 ## Requirements
 
 - A web server.

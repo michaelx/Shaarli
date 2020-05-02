@@ -1,3 +1,5 @@
+# Upgrade and migration
+
 ## Note your current version
 
 If anything goes wrong, it's important for us to know which version you're upgrading from.
@@ -10,14 +12,14 @@ Shaarli stores all user data and [configuration](Shaarli-configuration.md) under
 
 ## Upgrading from ZIP archives
 
-All tagged revisions can be downloaded as tarballs or ZIP archives from the [releases](https://github.com/shaarli/Shaarli/releases) page. See [Installation](Installation) for details.
+All tagged revisions can be downloaded as tarballs or ZIP archives from the [releases](https://github.com/shaarli/Shaarli/releases) page. See [Installation](Installation.md) for details.
 
 - Download the archive to the server, and extract it
 - OR if you don't have shell access/shared hosting, download it locally, extract it, and upload it to the server
 - Then overwrite your Shaarli installation. **All data will be lost, see _Backup your data_ above.**
 - If you use gettext mode for translations (not the default), reload your web server.
 - Restore backups of the `data` directory
-- Access your fresh Shaarli installation from a web browser; the configuration and data store will then be automatically updated, and new settings added to `data/config.json.php` (see [Shaarli configuration](Shaarli configuration) for more details).
+- Access your fresh Shaarli installation from a web browser; the configuration and data store will then be automatically updated, and new settings added to `data/config.json.php` (see [Shaarli configuration](Shaarli-configuration.md) for more details).
 
 
 ## Upgrading from Git
@@ -144,8 +146,7 @@ $ make translate
 
 If you use translations in gettext mode, reload your web server.
 
-Shaarli >= `v0.10.0` manages its front-end dependencies with nodejs. You need to install 
-[yarn](https://yarnpkg.com/lang/en/docs/install/):
+Shaarli >= `v0.10.0` manages its front-end dependencies with nodejs. You need to install [yarn](https://yarnpkg.com/lang/en/docs/install/):
 
 ```bash
 $ make build_frontend
@@ -175,7 +176,7 @@ Total 3317 (delta 2050), reused 3301 (delta 2034)to
 
 After migrating, access your fresh Shaarli installation from a web browser; the
 configuration will then be automatically updated, and new settings added to
-`data/config.json.php` (see [Shaarli configuration](Shaarli-configuration) for more
+`data/config.json.php` (see [Shaarli configuration](Shaarli-configuration.md) for more
 details).
 
 ## Troubleshooting
