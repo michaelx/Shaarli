@@ -1,6 +1,5 @@
 # Plugins
 
-
 ## Installation
 
 For plugins shipped with Shaarli, no installation is required.

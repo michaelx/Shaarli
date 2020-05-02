@@ -1,6 +1,6 @@
 # Troubleshooting
 
-First of all, ensure that both the [web server](Server-configuration) and [Shaarli](Shaarli-configuration) are correctly configured.
+First of all, ensure that both the [web server](Server-configuration.md) and [Shaarli](Shaarli-configuration.md) are correctly configured.
 
 
 ## Login

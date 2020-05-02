@@ -5,61 +5,72 @@
 If anything goes wrong, it's important for us to know which version you're upgrading from.
 The current version is present in the `shaarli_version.php` file.
 
+
 ## Backup your data
 
 Shaarli stores all user data and [configuration](Shaarli-configuration.md) under the `data` directory. [Backup](Backup-and-restore.md) this repository _before_ upgrading Shaarli. You will need to restore it after the following upgrade steps.
 
+```bash
+sudo cp -r /var/www/shaarli.mydomain.org/data ~/shaarli-data-backup
+```
 
 ## Upgrading from ZIP archives
 
-All tagged revisions can be downloaded as tarballs or ZIP archives from the [releases](https://github.com/shaarli/Shaarli/releases) page. See [Installation](Installation.md) for details.
+If you installed Shaarli from a [release ZIP archive](Installation.md#from-release-zip):
 
-- Download the archive to the server, and extract it
-- OR if you don't have shell access/shared hosting, download it locally, extract it, and upload it to the server
-- Then overwrite your Shaarli installation. **All data will be lost, see _Backup your data_ above.**
-- If you use gettext mode for translations (not the default), reload your web server.
-- Restore backups of the `data` directory
-- Access your fresh Shaarli installation from a web browser; the configuration and data store will then be automatically updated, and new settings added to `data/config.json.php` (see [Shaarli configuration](Shaarli-configuration.md) for more details).
+```bash
+# Download the archive to the server, and extract it
+cd ~
+wget https://github.com/shaarli/Shaarli/releases/download/v0.X.Y/shaarli-v0.X.Y-full.zip
+unzip shaarli-v0.X.Y-full.zip
+
+# overwrite your Shaarli installation with the new release **All data will be lost, see _Backup your data_ above.**
+sudo rsync -avP --delete Shaarli/ /var/www/shaarli.mydomain.org/
+
+# restore file permissions as described on the installation page
+sudo chown -R www-data:root /var/www/shaarli.mydomain.org
+sudo chmod -R u=rwX /var/www/shaarli.mydomain.org
+sudo chmod g+rX /var/www/shaarli.mydomain.org{/,/application,/plugins}
+sudo chmod g+r /var/www/shaarli.mydomain.org/{index.php,application/*.php,plugins/*.php,inc/,inc/*.php,inc/*.js,inc/*.css}
+sudo chmod g+rwX /var/www/shaarli.mydomain.org/{cache,data,pagecache,tmp}
+
+# restore backups of the data directory
+sudo cp -r ~/shaarli-data-backup /var/www/shaarli.mydomain.org/data
+
+# If you use gettext mode for translations (not the default), reload your web server.
+sudo systemctl restart apache2
+sudo systemctl restart nginx
+```
+
+If you don't have shell access (eg. on shared hosting), backup the shaarli data directory, download the ZIP archive locally, extract it, upload it to the server using file transfer, and restore the data directory backup.
+
+Access your fresh Shaarli installation from a web browser; the configuration and data store will then be automatically updated, and new settings added to `data/config.json.php` (see [Shaarli configuration](Shaarli-configuration.md) for more details).
 
 
 ## Upgrading from Git
 
-### Updating a community Shaarli
-
-If you have installed Shaarli from the https://github.com/shaarli/Shaarli, pull new changes from your local clone:
+If you have installed Shaarli [from git sources](Installation.md#from-git-sources):
 
 ```bash
+# pull new changes from your local clone
 cd /var/www/shaarli.mydomain.org/
 git pull
-```
-
-Since Shaarli `v0.8` PHP dependencies must be updated using [Composer](https://getcomposer.org/):
-
-```bash
-cd /var/www/shaarli.mydomain.org/
+# update PHP dependencies (Shaarli >= v0.8)
 composer install --no-dev
-```
-
-Since Shaarli `v0.9.2`, translations must be updated:
-
-```bash
-$ make translate
-```
-
-If you use translations in gettext mode, reload your web server.
-```bash
+# update translations (Shaarli >= v0.9.2)
+make translate
+# If you use translations in gettext mode (not the default), reload your web server.
 sudo systemctl reload apache
 sudo systemctl reload nginx
-```
-
-Since Shaarli `v0.10.0` front-end dependencies are managed with nodejs and [yarn](https://yarnpkg.com/lang/en/docs/install/):
-
-```bash
-$ make build_frontend
+# update front-end dependencies (Shaarli >= v0.10.0)
+make build_frontend
 ``` 
 
+Access your fresh Shaarli installation from a web browser; the configuration and data store will then be automatically updated, and new settings added to `data/config.json.php` (see [Shaarli configuration](Shaarli-configuration.md) for more details).
 
-### Migrating and upgrading from Sebsauvage's repository
+---------------------------------------------------------------
+
+## Migrating and upgrading from Sebsauvage's repository
 
 If you have installed Shaarli from [Sebsauvage's original Git repository](https://github.com/sebsauvage/Shaarli), you can use [Git remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes) to update your working copy.
 
@@ -73,7 +84,7 @@ The following guide assumes that:
     - no versioned file has been locally modified
     - no untracked files are present
 
-#### Step 0: show repository information
+### Step 0: show repository information
 
 ```bash
 $ cd /path/to/shaarli
@@ -91,7 +102,7 @@ Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
 ```
 
-#### Step 1: update Git remotes
+### Step 1: update Git remotes
 
 ```
 $ git remote rename origin sebsauvage
@@ -115,7 +126,7 @@ From https://github.com/shaarli/Shaarli
  * [new tag]         v0.7.0     -> v0.7.0
 ```
 
-#### Step 2: use the stable community branch
+### Step 2: use the stable community branch
 
 ```bash
 $ git checkout origin/stable -b stable
@@ -172,7 +183,7 @@ Writing objects: 100% (3317/3317), done.
 Total 3317 (delta 2050), reused 3301 (delta 2034)to
 ```
 
-#### Step 3: configuration
+### Step 3: configuration
 
 After migrating, access your fresh Shaarli installation from a web browser; the
 configuration will then be automatically updated, and new settings added to
