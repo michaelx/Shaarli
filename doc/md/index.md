@@ -41,34 +41,34 @@ Shaarli can be used:
 
 ### Edit, view and search your links
 
-- Minimalist, fast
 - Editable URL, title, description, tags, private/public status for all your [Shaares](Usage.md)
 - [Tags](Usage.md#tags) to organize your Shaares
 - [Search](Usage.md#search) in all fields
-- Public and private Shaares (visible only to logged-in users)
-- Unique permalinks for easy reference
-- Paginated Shaares list (with image and video thumbnails)
-- Tag cloud and list views
-- Picture wall: image and video thumbnails view (with lazy loading)
-- ATOM and RSS feeds (can also be filtered using tags or text search)
-- Daily: newspaper-like daily digest (and daily RSS feed)
-- URL cleanup: automatic removal of `?utm_source=...`, `fb=...`
-- Extensible through [plugins](https://shaarli.readthedocs.io/en/master/Plugins/#plugin-usage)
+- Unique [permalinks](Usage.md#permalinks) for easy reference
+- Paginated Shaares list view (with image and video thumbnails)
+- [Tag cloud/list](Usage#tag-cloud) views
+- [Picture wall](Usage#picture-wall)/thumbnails view (with lazy loading)
+- [ATOM and RSS feeds](Usage.md#rss-feeds) (can also be filtered using tags or text search)
+- [Daily](Usage.md#daily): newspaper-like daily digest (and daily RSS feed)
+- URL cleanup: automatic removal of `?utm_source=...`, `fb=...` tracking parameters
+- Extensible through [plugins](Plugins.md)
+- Easily extensible by any client using the [REST API](REST-API.md) exposed by Shaarli
+
 
 ### Easy setup
 
-- Dead-simple installation: drop the files, open the page
-- Shaares are stored in a file (no database required, easy backup: simply copy the datastore file)
-- Import and export Shaares as Netscape bookmarks compatible with most Web browsers
-- Customizable from [configuration](Shaarli-configuration) dialog/file and third-party [plugins and themes](Community-&-related-software)
+- Dead-simple [installation](Installation.md): drop the files on your server, open the page
+- Shaares are stored in a file (no database required, easy [backup](Backup-and-restore.md))
+- [Import and export](Usage.md#import-export) Shaares as Netscape bookmarks compatible with most Web browsers
+- [Configurable](Shaarli-configuration) dialog/file
+- Extensible through third-party [plugins and themes](Community-&-related-software.md)
 
 
 ### Accessibility
 
 - Bookmarklet and other tools to share links in one click
-- Support for mobile browsers
+- Responsive/support for mobile browsers
 - Degrades gracefully with Javascript disabled
-- Easy page customization through HTML/CSS/RainTPL
 
 
 ### Fast
@@ -77,36 +77,20 @@ Shaarli can be used:
 - Stays fast with even tens of thousands shaares!
 
 
-### Security
-
-- Discreet pop-up notification when a new release is available
-- Bruteforce protection on the login form, compatible with [fail2ban](Server-configuration#fail2ban)
-- Protected against [XSRF](http://en.wikipedia.org/wiki/Cross-site_request_forgery) and session cookie hijacking
-
-
 ### Self-hosted
 
 - Shaarli is an alternative to commercial services such as StumbleUpon, Delicio.us, Diigo...
-- Shaarli does not send any telemetry/metrics/private information to developers
 - The data is yours, [import and export](Usage#import-export) it to/from a variety of formats
+- Shaarli does not send any telemetry/metrics/private information to developers
 - Shaarli is Free and Open-Source software, inspect and change how the program works in the [source code](https://github.com/shaarli/Shaarli)
-
-
-### REST API
-
-- Easily extensible by any client using the REST API exposed by Shaarli ([API documentation](http://shaarli.github.io/api-documentation/)).
-
+- Built-in [Security](Development.md#security) features to help you protect your Shaarli instance
 
 
 ## About
 
-### Shaarli community fork
+This [community fork](https://github.com/shaarli/Shaarli) of the original [Shaarli](https://github.com/sebsauvage/Shaarli/) project by [Sébastien Sauvage](http://sebsauvage.net/) (now [unmaintained](https://github.com/sebsauvage/Shaarli/issues/191)) has carried on the work to provide [many patches](https://github.com/shaarli/Shaarli/compare/sebsauvage:master...master) for [bug fixes and enhancements](https://github.com/shaarli/Shaarli/issues?q=is%3Aclosed+) in this repository, and will keep maintaining the project for the foreseeable future, while keeping Shaarli simple and efficient.
 
-This friendly fork is maintained by the Shaarli community at <https://github.com/shaarli/Shaarli>
-
-This is a community fork of the original [Shaarli](https://github.com/sebsauvage/Shaarli/) project by [Sébastien Sauvage](http://sebsauvage.net/) which is now [unmaintained](https://github.com/sebsauvage/Shaarli/issues/191). The original Shaarli instance is still available [here](https://sebsauvage.net/links/) (+25000 shaares!)
-
-The Shaarli community has carried on the work to provide [many patches](https://github.com/shaarli/Shaarli/compare/sebsauvage:master...master) for [bug fixes and enhancements](https://github.com/shaarli/Shaarli/issues?q=is%3Aclosed+) in this repository, and will keep maintaining the project for the foreseeable future, while keeping Shaarli simple and efficient.
+The original Shaarli instance is still available [here](https://sebsauvage.net/links/) (+25000 shaares!)
 
 
 ### Contributing and getting help

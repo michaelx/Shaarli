@@ -3,7 +3,7 @@
 All data and [configuration](Shaarli-configuration.md) is kept in the `data` directory. Backup this directory: 
 
 ```bash
-rsync -avzP my.server.com:/var/www/shaarli.mydomain.org/data /home/me/backups/shaarli-data-$(date +%Y-%m-%d_%H%M)
+rsync -avzP my.server.com:/var/www/shaarli.mydomain.org/data ~/backups/shaarli-data-$(date +%Y-%m-%d_%H%M)
 ```
 
 It is strongly recommended to do periodic, automatic backups to a seperate machine. You can automate the command above using a cron job or full-featured backup solutions such as [rsnapshot](https://rsnapshot.org/)

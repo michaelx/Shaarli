@@ -1,6 +1,6 @@
 # REST API
 
-## Usage and requirements
+## Server requirements
 
 See the **[REST API documentation](http://shaarli.github.io/api-documentation/)** for a list of available endpoints and parameters.
 
@@ -11,55 +11,6 @@ Please ensure that your server meets the requirements and is properly [configure
 - the server's clock is synchronized with [NTP](https://en.wikipedia.org/wiki/Network_Time_Protocol)
 
 The host where the API client is invoked should also be synchronized with NTP, see _payload/token expiration_
-
-
-## Authentication
-
-- All requests to Shaarli's API must include a **JWT token** to verify their authenticity.
-- This token must be included as an HTTP header called `Authentication: Bearer <jwt token>`.
-- JWT tokens are composed by three parts, separated by a dot `.` and encoded in base64:
-
-```
-[header].[payload].[signature]
-```
-
-##### Header
-
-Shaarli only allow one hash algorithm, so the header will always be the same:
-
-```json
-{
-    "typ": "JWT",
-    "alg": "HS512"
-}
-```
-
-Encoded in base64, it gives:
-
-```
-ewogICAgICAgICJ0eXAiOiAiSldUIiwKICAgICAgICAiYWxnIjogIkhTNTEyIgogICAgfQ==
-```
-
-##### Payload
-
-Token expiration: To avoid infinite token validity, JWT tokens must include their creation date in UNIX timestamp format (timezone independent - UTC) under the key `iat` (issued at) field ([1](https://tools.ietf.org/html/rfc7519#section-4.1.6)). This token will be valid during **9 minutes**.
-
-```json
-{
-    "iat": 1468663519
-}
-```
-
-##### Signature
-
-The signature authenticates the token validity. It contains the base64 of the header and the body, separated by a dot `.`, hashed in SHA512 with the API secret available in Shaarli administration page.
-
-Example signature with PHP:
-
-```php
-$content = base64_encode($header) . '.' . base64_encode($payload);
-$signature = hash_hmac('sha512', $content, $secret);
-```
 
 
 ## Clients and examples
@@ -116,6 +67,57 @@ function getInfo($baseUrl, $secret) {
 
 var_dump(getInfo($baseUrl, $secret));
 ```
+
+## Implementation
+
+### Authentication
+
+- All requests to Shaarli's API must include a **JWT token** to verify their authenticity.
+- This token must be included as an HTTP header called `Authentication: Bearer <jwt token>`.
+- JWT tokens are composed by three parts, separated by a dot `.` and encoded in base64:
+
+```
+[header].[payload].[signature]
+```
+
+##### Header
+
+Shaarli only allow one hash algorithm, so the header will always be the same:
+
+```json
+{
+    "typ": "JWT",
+    "alg": "HS512"
+}
+```
+
+Encoded in base64, it gives:
+
+```
+ewogICAgICAgICJ0eXAiOiAiSldUIiwKICAgICAgICAiYWxnIjogIkhTNTEyIgogICAgfQ==
+```
+
+##### Payload
+
+Token expiration: To avoid infinite token validity, JWT tokens must include their creation date in UNIX timestamp format (timezone independent - UTC) under the key `iat` (issued at) field ([1](https://tools.ietf.org/html/rfc7519#section-4.1.6)). This token will be valid during **9 minutes**.
+
+```json
+{
+    "iat": 1468663519
+}
+```
+
+##### Signature
+
+The signature authenticates the token validity. It contains the base64 of the header and the body, separated by a dot `.`, hashed in SHA512 with the API secret available in Shaarli administration page.
+
+Example signature with PHP:
+
+```php
+$content = base64_encode($header) . '.' . base64_encode($payload);
+$signature = hash_hmac('sha512', $content, $secret);
+```
+
 
 
 ## Troubleshooting

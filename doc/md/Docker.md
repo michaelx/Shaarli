@@ -48,7 +48,7 @@ docker pull shaarli/shaarli
 docker volume create shaarli-data
 docker volume create shaarli-cache
 
-# create a new container from the image
+# create a new container using the Shaarli image
 # --detach: run the container in background
 # --name: name of the created container/instance
 # --publish: map the host's :8000 port to the container's :80 port
@@ -65,24 +65,20 @@ docker run --detach \
 # verify that the container is running
 docker ps | grep myshaarli
 
-# to stop the container
-docker stop myshaarli
-
-# check the container is stopped
-docker ps | grep myshaarli
-docker ps -a | grep myshaarli
-
-# destroy the container
-docker rm myshaarli
-docker ps -a | grep myshaarli
+# to completely remove the container
+docker stop myshaarli # stop the running container
+docker ps | grep myshaarli # verify the container is no longer running
+docker ps -a | grep myshaarli # verify the container is stopped
+docker rm myshaarli # destroy the container
+docker ps -a | grep myshaarli # verify th container has been destroyed
 
 ```
 
 ## Docker Compose
 
-[Docker Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container Docker applications.
+A [Compose file](https://docs.docker.com/compose/compose-file/) is a common format for defining and running multi-container Docker applications.
 
-A `docker-compose.yml` file can be used to run a persistent/autostarted shaarli service using docker-compose or in a [Docker stack](https://docs.docker.com/engine/reference/commandline/stack_deploy/)/[Swarm](https://docs.docker.com/engine/reference/commandline/swarm_init/).
+A `docker-compose.yml` file can be used to run a persistent/autostarted shaarli service using [Docker Compose](https://docs.docker.com/compose/) or in a [Docker stack](https://docs.docker.com/engine/reference/commandline/stack_deploy/).
 
 Shaarli provides configuration file for Docker Compose, that will setup a Shaarli instance, a [Træfik](https://hub.docker.com/_/traefik/) instance with [Let's Encrypt](https://letsencrypt.org/) certificates, a Docker network, and volumes for Shaarli data and Træfik TLS configuration and certificates.
 
