@@ -46,7 +46,7 @@ PHP (managed through [`composer.json`](https://github.com/shaarli/Shaarli/blob/m
 - Sessions automatically expire after 60 minutes.
 - Sessions are protected against hijacking: the session ID cannot be used from a different IP address.
 - Links are stored as an associative array which is serialized, compressed (with deflate), base64-encoded and saved as a comment in a `.php` file - even if the server does not support `.htaccess` files, the data file will still not be readable by URL.
-- Bruteforce protection: Successful and failed login attempts are logged - IP bans are enforced after a configurable amount of failures. Logs can also be used through [fail2ban](Server-configuration.md#fail2ban)
+- Bruteforce protection: Successful and failed login attempts are logged - IP bans are enforced after a configurable amount of failures. Logs can also be used consumed by [fail2ban](../Server-configuration.md#fail2ban)
 - A pop-up notification is shown when a new release is available.
 
 ## Link structure
@@ -154,7 +154,6 @@ See [`.travis.yml`](https://github.com/shaarli/Shaarli/blob/master/.travis.yml).
 
 
 ## Static analysis
-
 
 Patches should try to stick to the [PHP Standard Recommendations](http://www.php-fig.org/psr/) (PSR), especially:
 

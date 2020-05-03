@@ -72,7 +72,7 @@ Enter basic settings for your Shaarli installation, and it's ready to use!
 
 Congratulations! Your Shaarli is now available at `https://shaarli.mydomain.org`.
 
-You can further [configure Shaarli](Shaarli-configuration.md), setup [Plugins](Plugins.md) or [additional software](Community-&-Related-software.md).
+You can further [configure Shaarli](Shaarli-configuration.md), setup [Plugins](Plugins.md) or [additional software](Community-and-related-software.md).
 
 
 ## Upgrading Shaarli

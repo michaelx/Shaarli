@@ -15,7 +15,7 @@ While logged in to your Shaarli, you can add, edit or delete Shaares:
 
 - Using the **+Shaare** button: enter the URL you want to share, click `Add link`, fill in the details of your Shaare, and `Save`
 - Using the [Bookmarklet](https://en.wikipedia.org/wiki/Bookmarklet): drag the `✚Shaare link` button from the `Tools` page to your browser's bookmarks bar, click it to share the current page.
-- Using [apps and browser addons](Community-and-Related-software.md#mobile-apps)
+- Using [apps and browser addons](Community-and-related-software.md#mobile-apps)
 - Using the [REST API](https://shaarli.github.io/api-documentation/)
 - Any Shaare can edited by clicking its ![](images/edit_icon.png) `Edit` button.
 

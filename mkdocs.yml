@@ -17,16 +17,16 @@ pages:
 - Setup:
     - Installation: Installation.md
     - Docker: Docker.md
-    - Upgrade and migration: Upgrade-and-migration.md
     - Server configuration: Server-configuration.md
     - Reverse Proxy: Reverse-proxy.md
     - Backup and restore: Backup-and-restore.md
     - Shaarli configuration: Shaarli-configuration.md
     - Plugins: Plugins.md
+    - Upgrade and migration: Upgrade-and-migration.md
 - Usage:
     - Usage: Usage.md
     - REST API: REST-API.md
-    - Community & Related software: Community-&-Related-software.md
+    - Community and Related software: Community-and-related-software.md
 - Development:
     - Development: dev/Development.md
     - Versioning: dev/Versioning.md

@@ -83,7 +83,7 @@ Shaarli can be used:
 - The data is yours, [import and export](Usage#import-export) it to/from a variety of formats
 - Shaarli does not send any telemetry/metrics/private information to developers
 - Shaarli is Free and Open-Source software, inspect and change how the program works in the [source code](https://github.com/shaarli/Shaarli)
-- Built-in [Security](Development.md#security) features to help you protect your Shaarli instance
+- Built-in [Security](dev/Development.md#security) features to help you protect your Shaarli instance
 
 
 ## About
