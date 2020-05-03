@@ -61,7 +61,7 @@ Shaarli can be used:
 - Shaares are stored in a file (no database required, easy [backup](Backup-and-restore.md))
 - [Import and export](Usage.md#import-export) Shaares as Netscape bookmarks compatible with most Web browsers
 - [Configurable](Shaarli-configuration) dialog/file
-- Extensible through third-party [plugins and themes](Community-&-related-software.md)
+- Extensible through third-party [plugins and themes](Community-and-related-software.md)
 
 
 ### Accessibility

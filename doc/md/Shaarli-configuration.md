@@ -3,7 +3,7 @@
 Once your Shaarli instance is installed, the file `data/config.json.php` is generated:
 
 - it contains all settings in JSON format, and can be edited to customize values
-- it defines which [plugins](Plugin) are enabled
+- it defines which [plugins](Plugins.md) are enabled
 - its values override those defined in `index.php`
 - it is wrapped in a PHP comment so that its contents are never served by the web server, regardless of configuration
 
@@ -203,3 +203,6 @@ Must be an associative array: `translation domain => translation path`.
 - **enable_thumbnails**: Enable or disable thumbnail display.  
 - **enable_localcache**: Enable or disable local cache.
 
+## Plugins configuration
+
+See [Plugins](Plugins.md)
